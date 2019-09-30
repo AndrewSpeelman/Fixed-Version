@@ -233,7 +233,7 @@ MonoBehaviour:
   AttackedIndicator: {fileID: 1322095868030548, guid: 569b7672bd0bcac45b82f9ed902d9677,
     type: 3}
   PreviousModule: {fileID: 264402965}
-  InFlowingPump: {fileID: 0}
+  InFlowingPump: {fileID: 1036530040}
   Attacked: 0
   WaterIndicator: {fileID: 7247854893943363608, guid: 6f3b0decdc79626499f6904e31fdd2b6,
     type: 3}
@@ -414,6 +414,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7247854893943363608, guid: 6f3b0decdc79626499f6904e31fdd2b6,
         type: 3}
+    - target: {fileID: 5744008626719776522, guid: 9c98cec72dcc6484b9854215ff2db438,
+        type: 3}
+      propertyPath: InFlowingPump
+      value: 
+      objectReference: {fileID: 1036530040}
+    - target: {fileID: 5744008626719776522, guid: 9c98cec72dcc6484b9854215ff2db438,
+        type: 3}
+      propertyPath: PreviousModule
+      value: 
+      objectReference: {fileID: 138340193}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c98cec72dcc6484b9854215ff2db438, type: 3}
 --- !u!4 &176067067 stripped
@@ -958,7 +968,7 @@ PrefabInstance:
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 723745576}
     - target: {fileID: 114635232617175116, guid: ecb9ed18472e91e4a9841f3279372fb3,
         type: 3}
       propertyPath: AttackedIndicator
@@ -1087,7 +1097,7 @@ PrefabInstance:
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 723745576}
     - target: {fileID: 114698971064820580, guid: 2c0771878fa98c542813384f180890d5,
         type: 3}
       propertyPath: AttackedIndicator
@@ -1220,7 +1230,7 @@ PrefabInstance:
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 723745576}
     - target: {fileID: 114635232617175116, guid: ecb9ed18472e91e4a9841f3279372fb3,
         type: 3}
       propertyPath: AttackedIndicator
@@ -1346,7 +1356,7 @@ PrefabInstance:
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1036530040}
     - target: {fileID: 114291324350689874, guid: 764b2fb4f37fd534bb78d2cc22e522bd,
         type: 3}
       propertyPath: Tank
@@ -1445,7 +1455,7 @@ PrefabInstance:
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 723745576}
     - target: {fileID: 114635232617175116, guid: ecb9ed18472e91e4a9841f3279372fb3,
         type: 3}
       propertyPath: AttackedIndicator
@@ -1913,6 +1923,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1025122845}
   m_CullTransparentMesh: 0
+--- !u!114 &1036530040 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5744008626719776522, guid: 9c98cec72dcc6484b9854215ff2db438,
+    type: 3}
+  m_PrefabInstance: {fileID: 174817620}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 608c7bdfd549cc648a671380e587ca9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1053468215
 GameObject:
   m_ObjectHideFlags: 0
@@ -2156,7 +2178,7 @@ PrefabInstance:
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 723745576}
     - target: {fileID: 114635232617175116, guid: ecb9ed18472e91e4a9841f3279372fb3,
         type: 3}
       propertyPath: AttackedIndicator
@@ -2727,6 +2749,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7247854893943363608, guid: 6f3b0decdc79626499f6904e31fdd2b6,
         type: 3}
+    - target: {fileID: 5744008626719776522, guid: 9c98cec72dcc6484b9854215ff2db438,
+        type: 3}
+      propertyPath: InFlowingPump
+      value: 
+      objectReference: {fileID: 723745576}
+    - target: {fileID: 5744008626719776522, guid: 9c98cec72dcc6484b9854215ff2db438,
+        type: 3}
+      propertyPath: PreviousModule
+      value: 
+      objectReference: {fileID: 588473679}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c98cec72dcc6484b9854215ff2db438, type: 3}
 --- !u!1 &1663656655
@@ -2832,7 +2864,7 @@ PrefabInstance:
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 723745576}
     - target: {fileID: 114698971064820580, guid: 2c0771878fa98c542813384f180890d5,
         type: 3}
       propertyPath: AttackedIndicator
@@ -2893,12 +2925,12 @@ PrefabInstance:
         type: 3}
       propertyPath: PreviousModule
       value: 
-      objectReference: {fileID: 138340193}
+      objectReference: {fileID: 1036530040}
     - target: {fileID: 114635232617175116, guid: ecb9ed18472e91e4a9841f3279372fb3,
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1036530040}
     - target: {fileID: 114635232617175116, guid: ecb9ed18472e91e4a9841f3279372fb3,
         type: 3}
       propertyPath: AttackedIndicator
@@ -3087,7 +3119,7 @@ PrefabInstance:
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 723745576}
     - target: {fileID: 114299726853037410, guid: 6fb95b00634533e4aabdc54207e8830e,
         type: 3}
       propertyPath: InPump
@@ -3231,7 +3263,7 @@ PrefabInstance:
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 723745576}
     - target: {fileID: 114698971064820580, guid: 2c0771878fa98c542813384f180890d5,
         type: 3}
       propertyPath: AttackedIndicator
@@ -3371,7 +3403,7 @@ PrefabInstance:
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 723745576}
     - target: {fileID: 114635232617175116, guid: ecb9ed18472e91e4a9841f3279372fb3,
         type: 3}
       propertyPath: AttackedIndicator

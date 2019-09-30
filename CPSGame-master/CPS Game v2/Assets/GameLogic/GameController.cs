@@ -42,10 +42,45 @@ public class GameController : MonoBehaviour
     public int TurnDuration = 15; // Seconds
     private bool ActiveTurn;
 
+    private bool turnisActive = false;
 
     public GameState GameState = GameState.AttackerTurn;
 
     private List<Oracle> oracles;
+    protected void Update()
+    {
+        if (ActiveTurn) //can possibly optimize with coroutines.
+        {
+            //Debug.Log("ACTIVE: " + GameState);
+            ActiveTurnTimer = DateTime.Now;
+            CheckEndTurn();
+        }
+    }
+
+
+    private void CheckEndTurn()
+    {
+        int SecondsRemaining = (TurnDuration - (ActiveTurnTimer - StartTurnTimer).Seconds);
+        TurnTimer.text = "Time Remaining: " + SecondsRemaining.ToString();
+
+        if (SecondsRemaining > 5)
+        {
+            TurnTimer.color = new Color(.79f, .82f, .16f);
+        }
+        else if (SecondsRemaining % 2 == 0)
+        {
+            TurnTimer.color = new Color(1f, .3f, .15f);
+        }
+        else
+        {
+            TurnTimer.color = new Color(1f, .2f, 0);
+        }
+
+        if (ActiveTurnTimer > StartTurnTimer.AddSeconds(TurnDuration))
+        {
+            EndTurn();
+        }
+    }
 
     //setups
     protected void Awake()
@@ -72,7 +107,9 @@ public class GameController : MonoBehaviour
             oracles.Add(newOracle.GetComponent<Oracle>());
         }
 
+        Debug.Log("START TURN:");
         this.EndTurn();
+        Debug.Log("END TURN:");
         StartTurnTimer = DateTime.Now;
         ActiveTurn = true;
     }
@@ -81,40 +118,55 @@ public class GameController : MonoBehaviour
     {
         ActiveTurn = false;
 
-        if (this.GameState == GameState.AttackerTurn)
+        if (this.GameState == GameState.AttackerTurn) //defender
         {
-            
+
             this.GameState = GameState.DefenderTurn;
+            Debug.Log(GameState);
             this.AttackerUI.SetActive(false);
             TurnText.text = "Defender's Turn";
             TurnText.color = new Color(0, .5F, 1F);
         }
-        else
+        else //attacker turn
         {
+
             this.GameState = GameState.AttackerTurn;
-            this.NumAvailableAttacks = this.NumberOfAttacksPerTurn;
+
+            Debug.Log("THIS IS:" + GameState);
+            this.NumAvailableAttacks = this.NumberOfAttacksPerTurn; //resets
 
             this.AttackerUI.SetActive(true);
 
+            Debug.Log("HERE3");
             for (int i = 0; i < 13; i++) {
+
+                //Debug.Log("TICKING: " + i);
                 this.WaterFlowController.TickModules();
+
             }
 
-            foreach (Oracle o in this.oracles)
+            Debug.Log("HERE2");
+            foreach (Oracle o in this.oracles) //disable oracles
             {
                 o.InputActive = false;
                 o.ApplyRule();
+                Debug.Log("Disabling Oracles");
             }
 
+            Debug.Log("HERE1");
             if (++Turn >= TurnLimit)
             {
                 Results.ReservoirFill = Reservoir.WaterList.Count;
+
+                Debug.Log("LoadingNextScene");
                 this.SceneLoader.LoadNextScene();
             }
             ReservoirCounter.text = Reservoir.WaterList.Count.ToString();
             TurnCounter.text = "Turn: " + Turn + "/" + TurnLimit;
             TurnText.text = "Attacker's Turn";
             TurnText.color = new Color(1F, 0, 0);
+
+            Debug.Log("HERE");
         }
 
         ScreenCover.gameObject.GetComponentsInChildren<Text>()[0].text = TurnText.text;
@@ -123,34 +175,7 @@ public class GameController : MonoBehaviour
         StartCoroutine(WaitForClick());
     }
 
-    protected void Update()
-    {
-        if (ActiveTurn)
-        {
-            ActiveTurnTimer = DateTime.Now;
-
-            int SecondsRemaining = (TurnDuration - (ActiveTurnTimer - StartTurnTimer).Seconds);
-            TurnTimer.text = "Time Remaining: " + SecondsRemaining.ToString();
-
-            if (SecondsRemaining > 5)
-            {
-                TurnTimer.color = new Color(.79f, .82f, .16f);
-            }
-            else if (SecondsRemaining % 2 == 0)
-            {
-                TurnTimer.color = new Color(1f, .3f, .15f);
-            }
-            else
-            {
-                TurnTimer.color = new Color(1f, .2f, 0);
-            }
-
-            if (ActiveTurnTimer > StartTurnTimer.AddSeconds(TurnDuration))
-            {
-                EndTurn();   
-            }
-        }
-    }
+  
 
     protected IEnumerator WaitForClick()
     {

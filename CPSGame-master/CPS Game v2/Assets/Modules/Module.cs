@@ -140,7 +140,7 @@ public abstract class Module : MonoBehaviour
 		this.popupInstance.transform.SetParent(this.rootCanvas.transform, false);
 		var texts = this.popupInstance.GetComponentsInChildren<Text>();
         popupInstance.name = this.gameObject.name + "_popupInstance";
-        Debug.Log("Transform " + popupInstance.name + ": " + this.popupInstance.transform.position);
+        //Debug.Log("Transform " + popupInstance.name + ": " + this.popupInstance.transform.position);
 
 
         if (texts.Length == 2) { //unsure if ref or value passed
@@ -157,7 +157,7 @@ public abstract class Module : MonoBehaviour
             this.AttackedIndicator.transform.position,
             this.AttackedIndicator.transform.rotation);
         attackedIndicatorInstance.name = this.gameObject.name + "_attackedIndicatorInstance";
-        Debug.Log("Transform "+ attackedIndicatorInstance.name + ": " + this.AttackedIndicator.transform.position);
+        //Debug.Log("Transform "+ attackedIndicatorInstance.name + ": " + this.AttackedIndicator.transform.position);
         // weird y alignment. Don't know how it happened.
 
         //sets parents to first gameobject tag

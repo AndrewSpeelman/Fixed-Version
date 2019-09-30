@@ -29,9 +29,11 @@ public class WaterFlowController : MonoBehaviour
     /// </summary>
     public void TickModules()
     {
-        Debug.Log("Tick Module: " + index);
+        index++;
+        //Debug.Log("Tick Module: " + index);
         this.Reservoir.Tick();
         this.firstModule.Water = new WaterObject();
+        //StartWaterFlow(5f);
     }
 
     /// <summary>
