@@ -20,9 +20,20 @@ public abstract class Module : MonoBehaviour
 
     public WaterObject Water;
 
+    public List<WaterObject> WaterList = new List<WaterObject>();
+
+    //BY DEFAULT, ALL MODULES HAVE 1 CAPACITY
+
+    private int capacity;
     public virtual int Capacity
     {
-        get { return 3; }
+        get { return capacity; }
+        set { capacity = value; }
+    }
+
+    public virtual int WaterAmount
+    {
+        get { return WaterList.Count; }
     }
 
     private GameController gameController;
@@ -122,7 +133,8 @@ public abstract class Module : MonoBehaviour
         WaterIndicator = Instantiate(WaterIndicator, this.WaterIndicator.transform.position, this.WaterIndicator.transform.rotation);
         WaterIndicator.transform.SetParent(this.gameObject.transform);
         WaterIndicator.transform.position = transform.position;
-        //
+        
+        //This is attached to update populdisplay
         this.displayFields = new List<string>
         {
             "Attacked",
@@ -130,9 +142,11 @@ public abstract class Module : MonoBehaviour
             "HasFlow",
             "Purity1",
             "Purity2",
-            "Purity3"
+            "Purity3",
+            "WaterAmount"
         };
 
+        Capacity = 1;
         rootCanvas = (Canvas)FindObjectOfType(typeof(Canvas));
 
         //Instantiate the popup that displays the display fields
@@ -161,7 +175,7 @@ public abstract class Module : MonoBehaviour
         // weird y alignment. Don't know how it happened.
 
         //sets parents to first gameobject tag
-        this.attackedIndicatorInstance.transform.SetParent(GameObject.FindGameObjectWithTag("Attacker").transform);
+        this.attackedIndicatorInstance.transform.SetParent(GameObject.FindGameObjectWithTag("AttackerIndicatorInstance").transform);
         this.attackedIndicatorInstance.SetActive(false);
 
         this.AttackDropdowns = this.attackedIndicatorInstance.GetComponentsInChildren<Dropdown>();
@@ -218,6 +232,7 @@ public abstract class Module : MonoBehaviour
     /// </summary>
     protected virtual void OnOverflow()
     {
+        //CURRENTLY WILL ASSUME LIMITS TO MAX CAPACITY
 
     }
 

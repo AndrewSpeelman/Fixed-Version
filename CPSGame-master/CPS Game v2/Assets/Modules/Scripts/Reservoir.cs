@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Reservoir : Module
 {
-    public List<WaterObject> WaterList = new List<WaterObject>();
+   
 
     public int Fill {
         get { return WaterList.Count; }

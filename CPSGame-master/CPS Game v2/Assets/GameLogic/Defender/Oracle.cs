@@ -17,12 +17,14 @@ public class Oracle : MonoBehaviour
     public GameObject OraclePopupPrefab;
 
     private Valuation firstValuation, secondValuation;
-    
+    public Animator oracleAnimator;
+
     private void Awake()
     {
         var vals = this.GetComponentsInChildren<Valuation>();
         this.firstValuation = vals[0];
         this.secondValuation = vals[1];
+        oracleAnimator = GetComponent<Animator>();
     }
 
     private void Start()
@@ -184,5 +186,19 @@ public class Oracle : MonoBehaviour
         {
             return;
         }
+    }
+
+    //Sets the animator into the corect state so that animations can be played propeprly
+    public void setAnimationState(string state)
+    {
+        if(state == "idle")
+        {
+            oracleAnimator.SetBool("isIdle",true);
+        }
+        else if(state == "searching")
+        {
+          oracleAnimator.SetBool("isIdle", false);
+        }
+
     }
   }

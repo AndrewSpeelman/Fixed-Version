@@ -8,7 +8,6 @@ public class Tank : Module
 
     public GameObject overFlowSprite;
 
-    public List<WaterObject> WaterList = new List<WaterObject>();
 
     public int Fill {
         get {
@@ -17,12 +16,14 @@ public class Tank : Module
      }
 
     [Range(1, 10)]
+    [Tooltip("This is only set at Start()")]
     public int TankCapacity = 5;
 
     private new void Start()
     {
         this.displayFields.Add("Fill");
         base.Start();
+        Capacity = TankCapacity;
     }
 
     /// <summary>

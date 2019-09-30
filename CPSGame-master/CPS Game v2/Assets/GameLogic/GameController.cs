@@ -93,11 +93,15 @@ public class GameController : MonoBehaviour
         TurnText.gameObject.SetActive(true);
         ScreenCover.gameObject.SetActive(false);
         ScreenCover.fillCenter = true;
+
     }
 
     //I think it doesn't have a turn timer
     protected void Start()
     {
+        //added here so that capacity=1 in module doesn't override. Could also change script execution order
+        Reservoir.Capacity = ReservoirLimit;
+
         //makes oracles-- owls---
         for (int i = 0; i < this.NumberOfOracles; i++)
         {
@@ -136,24 +140,17 @@ public class GameController : MonoBehaviour
             this.NumAvailableAttacks = this.NumberOfAttacksPerTurn; //resets
 
             this.AttackerUI.SetActive(true);
-
-            Debug.Log("HERE3");
-            for (int i = 0; i < 13; i++) {
+            
+            for (int i = 0; i < 13; i++)
+            {
 
                 //Debug.Log("TICKING: " + i);
                 this.WaterFlowController.TickModules();
 
             }
 
-            Debug.Log("HERE2");
-            foreach (Oracle o in this.oracles) //disable oracles
-            {
-                o.InputActive = false;
-                o.ApplyRule();
-                Debug.Log("Disabling Oracles");
-            }
+            OracleEnabler();
 
-            Debug.Log("HERE1");
             if (++Turn >= TurnLimit)
             {
                 Results.ReservoirFill = Reservoir.WaterList.Count;
@@ -166,26 +163,29 @@ public class GameController : MonoBehaviour
             TurnText.text = "Attacker's Turn";
             TurnText.color = new Color(1F, 0, 0);
 
-            Debug.Log("HERE");
         }
 
         ScreenCover.gameObject.GetComponentsInChildren<Text>()[0].text = TurnText.text;
         ScreenCover.gameObject.GetComponentsInChildren<Text>()[0].color = TurnText.color;
-        
+
         StartCoroutine(WaitForClick());
     }
 
-  
+
+
 
     protected IEnumerator WaitForClick()
     {
+        //Puts up the screen cover
         ScreenCover.gameObject.SetActive(true);
         GameUI.SetActive(false);
         GameBoard.SetActive(false);
         TurnTimer.gameObject.SetActive(false);
 
+        //waits for click
         yield return new WaitWhile(() => !Input.GetMouseButtonDown(0));
 
+        //puts doesn screen cover
         ScreenCover.gameObject.SetActive(false);
         TurnTimer.gameObject.SetActive(true);
         GameUI.SetActive(true);
@@ -193,9 +193,31 @@ public class GameController : MonoBehaviour
 
         ActiveTurn = true;
         StartTurnTimer = DateTime.Now;
+        OracleEnabler();
+    }
+
+    private void OracleEnabler()
+    {
+
         if (this.GameState == GameState.DefenderTurn)
         {
-            this.oracles.ForEach(o => o.InputActive = true);
+            Debug.Log("Enabling Oracles");
+            foreach (Oracle o in this.oracles) //enable oracles
+            {
+                o.InputActive = true;
+                o.setAnimationState("searching"); //possibly change this to a global like gamestate
+            }
+        }
+        else
+        {
+            Debug.Log("Disabling Oracles");
+            foreach (Oracle o in this.oracles) //disable oracles
+            {
+                o.InputActive = false;
+                o.ApplyRule();
+                o.setAnimationState("idle"); //possibly change this to a global like gamestate
+            }
+
         }
     }
 }

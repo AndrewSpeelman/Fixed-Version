@@ -722,7 +722,7 @@ GameObject:
   - component: {fileID: 512475076}
   m_Layer: 5
   m_Name: AttackerIndicatorInstances
-  m_TagString: Untagged
+  m_TagString: AttackerIndicatorInstance
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1623,6 +1623,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b52198275b4dd4a881da732309a19c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelText: {fileID: 0}
 --- !u!114 &952970046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1694,7 +1695,7 @@ GameObject:
   - component: {fileID: 963582290}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Attacker
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1903,7 +1904,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 100
+    m_FontSize: 90
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -1922,7 +1923,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1025122845}
-  m_CullTransparentMesh: 0
+  m_CullTransparentMesh: 1
 --- !u!114 &1036530040 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5744008626719776522, guid: 9c98cec72dcc6484b9854215ff2db438,
@@ -2511,6 +2512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b52198275b4dd4a881da732309a19c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelText: {fileID: 1025122847}
 --- !u!114 &1402154361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3062,6 +3064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b52198275b4dd4a881da732309a19c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelText: {fileID: 0}
 --- !u!114 &1868224651
 MonoBehaviour:
   m_ObjectHideFlags: 0
