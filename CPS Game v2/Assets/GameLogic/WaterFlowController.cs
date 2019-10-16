@@ -13,6 +13,8 @@ public class WaterFlowController : MonoBehaviour
     private Module firstModule;
     [SerializeField]
     private Module endModule;
+    
+    public List<Module> ModuleList = new List<Module>();
 
 
     private int index=0;
@@ -38,10 +40,42 @@ public class WaterFlowController : MonoBehaviour
     {
 
     }
+    
+    public void CompileModuleList()
+    {
+        //only flows if water is available from previous and not blocked
+        ModuleList.Clear();
+        ModuleList.Add(firstModule);
+        index=0;
+        firstModule.name = index + "--" + firstModule.name;
+        foreach(Module next in firstModule.NextModule)
+        {
+            index++;
+            next.name = index + "--" + next.name;
+            AddNextModule(next);
+        }
+    }
+     
+    private void AddNextModule(Module currentModule)
+    {
+        //only flows if water is available from previous and not blocked
+        if(!(ModuleList.Contains(currentModule)))
+        {
+            index++;
+            currentModule.name = index + "--" + currentModule.name;            
+            ModuleList.Add(currentModule);
+        }
+        foreach(Module next in currentModule.NextModule)
+        {
+            AddNextModule(next);
+        }
+    }
     public void SimulateWater()
     {
         //asumes no diverging paths for now
+        //clearwater
         Module currMod = firstModule;
+        CompileModuleList();
 
         this.firstModule.Water = new WaterObject();
         firstModule.NextModule[0].WaterFlow(); //takes first one

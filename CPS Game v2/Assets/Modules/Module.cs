@@ -22,6 +22,7 @@ public abstract class Module : MonoBehaviour
     public WaterObject Water;
 
     public List<WaterObject> WaterList = new List<WaterObject>();
+    [SerializeField]
 
     //BY DEFAULT, ALL MODULES HAVE 1 CAPACITY
 
@@ -241,11 +242,10 @@ public abstract class Module : MonoBehaviour
             }
 
         }
-
-        
-
-
     }
+
+  
+
 
     /// <summary>
     /// Only called when the pump is on.  Brings as much water as it can from the previous module into this one.
