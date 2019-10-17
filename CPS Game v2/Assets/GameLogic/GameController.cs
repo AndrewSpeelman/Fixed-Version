@@ -9,6 +9,8 @@ using UnityEngine.UI;
 /// </summary>
 public class GameController : MonoBehaviour
 {
+    
+    public static GameController current;
     public WaterFlowController WaterFlowController;
     public SceneLoader SceneLoader;
     public UIManager UIManager;
@@ -87,15 +89,13 @@ public class GameController : MonoBehaviour
     protected void Awake()
     {
 
-        //Results.ReservoirLimit = ReservoirLimit;// not sure about this maybe should put properly into a script in a serperate gameobject
+        if(current == null)
+        {
+            current=this;
 
-        //oracles = new List<Oracle>();
-        /* 
-        TurnText.gameObject.SetActive(true);
-        ScreenCover.gameObject.SetActive(false);
-        ScreenCover.fillCenter = true;
-        */
-
+        }
+        else
+         Destroy(gameObject);
     }
 
     //I think it doesn't have a turn timer
@@ -165,8 +165,6 @@ public class GameController : MonoBehaviour
         }
         else //defender turn
         {
-
-
             UIManager.current.HideWaterIndicatorTrigger();
         }
         ActiveTurn=true;

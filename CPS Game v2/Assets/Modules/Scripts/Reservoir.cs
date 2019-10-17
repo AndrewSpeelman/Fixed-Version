@@ -24,7 +24,7 @@ public class Reservoir : Module
 */
     private new void Start()
     {
-        this.displayFields.Add("Fill");
+        //this.displayFields.Add("Fill");
         //this.displayFields.Add("AveragePurity");
         base.Start();
     }
@@ -42,10 +42,12 @@ public class Reservoir : Module
         }
     }
 
+    /*
     public override void Attack()
     {
         //Don't let the reservoid be attacked
     }
+    */
 
     public override string ToString()
     {

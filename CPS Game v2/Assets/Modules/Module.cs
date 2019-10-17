@@ -38,8 +38,6 @@ public abstract class Module : MonoBehaviour
     //     get { return WaterList.Count; }
     // }
 
-    private GameController gameController;
-
     protected List<string> displayFields;
     private GameObject popupInstance;
     private Text displayTextTitle;
@@ -47,30 +45,27 @@ public abstract class Module : MonoBehaviour
 
     protected Dropdown[] AttackDropdowns;
 
+    
     public bool HasFlow {
         get {
             return this.Water != null;
         }
     }
-
     private GameObject attackedIndicatorInstance;
     private Canvas rootCanvas;
     public GameObject WaterIndicator;
-    public bool isHide=false;
 
     //-------TEMPORARY------
      void Update()
     {
-
     }
 
     protected void Start()
     {
         UIManager.current.onHideWaterIndicatorTrigger += onHideWaterIndicator;
         UIManager.current.onShowWaterIndicatorTrigger += onShowWaterIndicator;
+        WaterFlowController.current.listenercounttest ++;
 
-        
-        this.gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
     } 
 
     //UIwaterIndicator event system
@@ -79,13 +74,13 @@ public abstract class Module : MonoBehaviour
         WaterIndicator.SetActive(false);        
     }
     private void onShowWaterIndicator()
-    {
-        WaterIndicator.SetActive(true);        
+    {        
+        if(!HasFlow)
+            WaterIndicator.SetActive(true);        
     }
 
     private void OnDestroy()
-    {
-        
+    {        
         UIManager.current.onHideWaterIndicatorTrigger -= onHideWaterIndicator;
         UIManager.current.onShowWaterIndicatorTrigger -= onShowWaterIndicator;
     }
@@ -112,63 +107,24 @@ public abstract class Module : MonoBehaviour
         WaterIndicator = Instantiate(WaterIndicator, this.WaterIndicator.transform.position, this.WaterIndicator.transform.rotation);
         WaterIndicator.transform.SetParent(this.gameObject.transform);
         WaterIndicator.transform.position = transform.position;
-        
+        /* 
         //This is attached to update populdisplay
         this.displayFields = new List<string>
         {
             "Attacked",
             "Capacity",
             "HasFlow",
-            "Purity1",
-            "Purity2",
-            "Purity3",
             "WaterAmount"
         };
 
-        Capacity = 1;
+        Capacity = 1;*/
         rootCanvas = (Canvas)FindObjectOfType(typeof(Canvas));
-
-        //Instantiate the popup that displays the display fields
-        this.popupInstance = Instantiate (this.popupPrefab, this.popupPrefab.transform.position, this.popupPrefab.transform.rotation);
-		this.popupInstance.transform.SetParent(this.rootCanvas.transform, false);
-		var texts = this.popupInstance.GetComponentsInChildren<Text>();
-        popupInstance.name = this.gameObject.name + "_popupInstance";
-        //Debug.Log("Transform " + popupInstance.name + ": " + this.popupInstance.transform.position);
-
-
-        if (texts.Length == 2) { //unsure if ref or value passed
-			this.displayTextContent = texts[1];
-			this.displayTextTitle = texts[0];
-		}
-		this.displayTextTitle.text = this.gameObject.name;
-
-		//this.CloseInfoPopup();
-
-        //initiate attacker instance at cursor // Camera.main.WorldToScreenPoint places the indicators correctly
-        //https://docs.unity3d.com/ScriptReference/Camera.WorldToScreenPoint.html
-        this.attackedIndicatorInstance = Instantiate(this.AttackedIndicator,
-            this.AttackedIndicator.transform.position,
-            this.AttackedIndicator.transform.rotation);
-        attackedIndicatorInstance.name = this.gameObject.name + "_attackedIndicatorInstance";
-        //Debug.Log("Transform "+ attackedIndicatorInstance.name + ": " + this.AttackedIndicator.transform.position);
-        // weird y alignment. Don't know how it happened.
-
-        //sets parents to first gameobject tag
-        this.attackedIndicatorInstance.transform.SetParent(GameObject.FindGameObjectWithTag("AttackerIndicatorInstance").transform);
-        this.attackedIndicatorInstance.SetActive(false);
-
-        this.AttackDropdowns = this.attackedIndicatorInstance.GetComponentsInChildren<Dropdown>();
-        var cancelAttackButton = this.attackedIndicatorInstance.GetComponentInChildren<Button>();
-        if (cancelAttackButton)
-        {
-            //https://youtu.be/h9ye2lU4lhw Unity Memory Game Tutorial - 4 - Adding Listeners To Our Buttons - Memory Game In Unity
-            cancelAttackButton.onClick.AddListener(delegate { this.ReverseAttack(); });
-        }
 	}
 
 
     /// <summary>
     /// Moves water through system if specified pump is on. Then calls Tick for previous module.
+    /// ----------obselete-------
     /// </summary>
     public virtual void Tick()
     {
@@ -239,7 +195,6 @@ public abstract class Module : MonoBehaviour
     /// </summary>
     protected virtual void OnOverflow()
     {
-        //CURRENTLY WILL ASSUME LIMITS TO MAX CAPACITY
 
     }
 
@@ -248,13 +203,11 @@ public abstract class Module : MonoBehaviour
     /// </summary>
     public virtual void Attack()
     {
-        this.Attacked = true;
-        this.attackedIndicatorInstance.SetActive(true);
+        this.Attacked = !this.Attacked;
+        WaterFlowController.current.SimulateWater();
+        
+        //resimulate the water
 
-        RectTransform UITransform = this.attackedIndicatorInstance.GetComponent<RectTransform>();        
-        UITransform.position = Camera.main.WorldToScreenPoint(this.transform.position);
-
-        this.gameController.NumAvailableAttacks--;// maybe not put it here, have the attacks decrease only in the dropdown menu
     }
 
     /// <summary>
@@ -277,7 +230,7 @@ public abstract class Module : MonoBehaviour
     {
         if (this.Attacked)
         {
-            this.gameController.NumAvailableAttacks++;
+            GameController.current.NumAvailableAttacks++;
             this.Fix();
         }
     }
@@ -287,87 +240,16 @@ public abstract class Module : MonoBehaviour
     /// </summary>
     private void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(0))
+        if(GameController.current.GameState == GameState.AttackerTurn)
         {
-            if (this.gameController && this.gameController.GameState == GameState.AttackerTurn)
+            if (Input.GetMouseButtonDown(0))
             {
-                if (!this.Attacked && this.gameController.NumAvailableAttacks > 0)
-                {
-                    this.Attack();
-                }
-            }
+                Debug.Log("ATTACKED: "+ gameObject.name);
+                this.Attack();            }
+
         }
-        /* 
-        if (Input.GetMouseButtonDown(1))
-        {
-            if (this.popupInstance.activeSelf)
-            {
-                this.CloseInfoPopup();
-            }
-            else
-            {
-                this.OpenInfoPopup(Input.mousePosition);
-            }
-        }*/
     }
 
-    /// <summary>
-    /// Updates the popup display by getting the values of the fields and changing the popup text to display
-    /// the current values of the fields
-    /// </summary>
-    /* 
-    public void UpdatePopupDisplay() {
-		var bindings = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-
-		var fields = new List<FieldInfo>();
-        var props = new List<PropertyInfo>();
-		foreach (string fieldName in displayFields) {
-            var info = this.GetType().GetField(fieldName, bindings);
-            if (info != null)
-            {
-                fields.Add(this.GetType().GetField(fieldName, bindings));
-            }
-            else
-            {
-                props.Add(this.GetType().GetProperty(fieldName, bindings));
-            }
-		}
-
-		var displayStrings = new List<string>();
-		foreach(FieldInfo field in fields) {
-			displayStrings.Add(field.Name + ": " + field.GetValue(this));
-		}
-        foreach(PropertyInfo prop in props)
-        {
-            displayStrings.Add(prop.Name + ": " + prop.GetValue(this, null));
-        }
-
-		this.displayTextContent.text = string.Join("\n", displayStrings.ToArray());
-	}
-*/
-	/// <summary>
-	/// Opens the info popup at the given location
-	/// </summary>
-	/// <param name="position">The position to place the popup at.</param>
-    /*/
-	protected void OpenInfoPopup(Vector2 position) {
-		this.CloseInfoPopup();
-		this.UpdatePopupDisplay();
-		RectTransform UITransform = this.popupInstance.GetComponent<RectTransform>();
-
-		//UITransform.position = position + new Vector2((UITransform.rect.width / 2), (UITransform.rect.height / 2)); --old--
-        UITransform.position = Camera.main.WorldToScreenPoint(this.transform.position);
-
-        this.popupInstance.SetActive(true);
-	}
-
-    /// <summary>
-    /// Closes the info popup
-    /// </summary>
-	protected void CloseInfoPopup() {
-		this.popupInstance.SetActive(false);
-	}
-*/
     /// <summary>
     /// True if the lhs module appears earlier in the system than the rhs
     /// </summary>

@@ -16,10 +16,17 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        current=this;        
+        if(current == null)
+        {
+            current=this;
+
+        }
+        else
+         Destroy(gameObject);    
     }
 
     //check https://youtu.be/gx0Lt4tCDE0
+    
     public event Action onHideWaterIndicatorTrigger;
     public event Action onShowWaterIndicatorTrigger;
     public void HideWaterIndicatorTrigger()

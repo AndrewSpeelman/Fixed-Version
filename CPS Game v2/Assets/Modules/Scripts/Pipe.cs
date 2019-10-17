@@ -8,6 +8,7 @@ public class Pipe : Module
     private bool Flow;
     private bool[] Purity;
 
+    /*
     public override void Attack()
     {
         if (Water == null)
@@ -23,4 +24,5 @@ public class Pipe : Module
         Purity[2] = AttackDropdowns[3];
         base.Attack();
     }
+    */
 }
