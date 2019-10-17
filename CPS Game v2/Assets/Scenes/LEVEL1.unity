@@ -1073,6 +1073,7 @@ MonoBehaviour:
   Reservoir: {fileID: 818242695}
   firstModule: {fileID: 723745576}
   endModule: {fileID: 818242695}
+  ModuleList: []
 --- !u!4 &689642307
 Transform:
   m_ObjectHideFlags: 0
@@ -1621,29 +1622,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 995454136}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88ad1c4267a34774a846be9d84fb4520, type: 3}
+  m_Script: {fileID: 11500000, guid: f37ee77e422364345887f8606e46cee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WaterFlowController: {fileID: 689642306}
-  SceneLoader: {fileID: 1663656656}
-  OraclePrefab: {fileID: 1151573525474462, guid: 2f3523011a04e6f40aa95f958c2abf53,
-    type: 3}
-  OracleSpawnPoint: {fileID: 558514832}
-  AttackerUI: {fileID: 1402154358}
-  Reservoir: {fileID: 818242695}
-  TurnCounter: {fileID: 99058775}
-  ReservoirCounter: {fileID: 1053468218}
-  ScreenCover: {fileID: 952970046}
-  GameUI: {fileID: 1868224648}
-  GameBoard: {fileID: 945473463}
-  TurnText: {fileID: 1311477495}
-  NumberOfAttacksPerTurn: 1
-  NumberOfOracles: 2
+  WaterFlowController: {fileID: 0}
+  SceneLoader: {fileID: 0}
+  UIManager: {fileID: 0}
+  AttackerUI: {fileID: 0}
+  Reservoir: {fileID: 0}
+  TurnCounter: {fileID: 0}
+  ReservoirCounter: {fileID: 0}
+  ScreenCover: {fileID: 0}
+  GameUI: {fileID: 0}
+  GameBoard: {fileID: 0}
+  TurnText: {fileID: 0}
+  attackResource: 1
+  NumberOfOracles: 1
   ReservoirLimit: 10
   TurnLimit: 15
-  TurnTimer: {fileID: 1376493227}
-  TurnDuration: 500
-  GameState: 1
+  TurnTimer: {fileID: 0}
+  TurnDuration: 15
+  GameState: 0
 --- !u!1 &1025122845
 GameObject:
   m_ObjectHideFlags: 0

@@ -71,6 +71,7 @@
      <Compile Include="Assets\Modules\Scripts\Reservoir.cs" />
      <Compile Include="Assets\Modules\Scripts\Tank.cs" />
      <Compile Include="Assets\Modules\Scripts\TankPipe.cs" />
+     <Compile Include="Assets\Modules\UI\UIManager.cs" />
      <Compile Include="Assets\Results.cs" />
      <Compile Include="Assets\SceneLoader.cs" />
      <Compile Include="Assets\StartButton.cs" />

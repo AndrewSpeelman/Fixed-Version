@@ -33,10 +33,10 @@ public abstract class Module : MonoBehaviour
         set { capacity = value; }
     }
 
-    public virtual int WaterAmount
-    {
-        get { return WaterList.Count; }
-    }
+    // public virtual int WaterAmount
+    // {
+    //     get { return WaterList.Count; }
+    // }
 
     private GameController gameController;
 
@@ -52,68 +52,44 @@ public abstract class Module : MonoBehaviour
             return this.Water != null;
         }
     }
-    /*
-    public bool Purity1 {
-        get {
-            if (this.Attacked && this.GetType() == typeof(Pipe))
-            {
-                return this.AttackDropdowns[1].value == 0;
-            }
-            else
-            {
-                if (this.Water != null)
-                    return this.Water.purity[0];
-                else
-                    return false;
-            }
-        }
-    }
-    public bool Purity2 {
-        get {
-            if (this.Attacked && this.GetType() == typeof(Pipe))
-            {
-                return this.AttackDropdowns[2].value == 0;
-            }
-            else
-            {
-                if (this.Water != null)
-                    return this.Water.purity[1];
-                else
-                    return false;
-            }
-        }
-    }
-    public bool Purity3 {
-        get {
-            if (this.Attacked && this.GetType() == typeof(Pipe))
-            {
-                return this.AttackDropdowns[3].value == 0;
-            }
-            else
-            {
-                if (this.Water != null)
-                    return this.Water.purity[2];
-                else
-                    return false;
-            }
-        }
-    }
-*/
+
     private GameObject attackedIndicatorInstance;
     private Canvas rootCanvas;
     public GameObject WaterIndicator;
+    public bool isHide=false;
 
     //-------TEMPORARY------
      void Update()
     {
-        if(Water==null)
-        {
-            WaterIndicator.SetActive(false);
-        }
-        else
-            WaterIndicator.SetActive(true);
 
     }
+
+    protected void Start()
+    {
+        UIManager.current.onHideWaterIndicatorTrigger += onHideWaterIndicator;
+        UIManager.current.onShowWaterIndicatorTrigger += onShowWaterIndicator;
+
+        
+        this.gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+    } 
+
+    //UIwaterIndicator event system
+    private void onHideWaterIndicator()
+    {
+        WaterIndicator.SetActive(false);        
+    }
+    private void onShowWaterIndicator()
+    {
+        WaterIndicator.SetActive(true);        
+    }
+
+    private void OnDestroy()
+    {
+        
+        UIManager.current.onHideWaterIndicatorTrigger -= onHideWaterIndicator;
+        UIManager.current.onShowWaterIndicatorTrigger -= onShowWaterIndicator;
+    }
+    //-----------------
 
     public virtual bool IsFilter()
     {
@@ -190,10 +166,6 @@ public abstract class Module : MonoBehaviour
         }
 	}
 
-    protected void Start()
-    {
-        this.gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-    }
 
     /// <summary>
     /// Moves water through system if specified pump is on. Then calls Tick for previous module.

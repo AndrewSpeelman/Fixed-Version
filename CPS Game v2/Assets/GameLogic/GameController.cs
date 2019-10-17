@@ -11,23 +11,24 @@ public class GameController : MonoBehaviour
 {
     public WaterFlowController WaterFlowController;
     public SceneLoader SceneLoader;
+    public UIManager UIManager;
 
-    public GameObject OraclePrefab;
-    public GameObject OracleSpawnPoint;
+    //public GameObject OraclePrefab;
+    //public GameObject OracleSpawnPoint;
 
     public GameObject AttackerUI;
 
     public Reservoir Reservoir;
 
     public Text TurnCounter;
-    public Text ReservoirCounter;
+    //public Text ReservoirCounter;
 
-    public Image ScreenCover;
+    //public Image ScreenCover;
     public GameObject GameUI;
     public GameObject GameBoard;
     public Text TurnText;
 
-    public int NumberOfAttacksPerTurn = 1;
+    public int attackResource = 1;
     public int NumberOfOracles = 1;
     public int NumAvailableAttacks { get; set; }
 
@@ -49,50 +50,51 @@ public class GameController : MonoBehaviour
     private List<Oracle> oracles;
     protected void Update()
     {
-        if (ActiveTurn) //can possibly optimize with coroutines.
-        {
-            //Debug.Log("ACTIVE: " + GameState);
-            ActiveTurnTimer = DateTime.Now;
-            CheckEndTurn();
-        }
+        // if (ActiveTurn) //can possibly optimize with coroutines.
+        // {
+        //     //Debug.Log("ACTIVE: " + GameState);
+        //     ActiveTurnTimer = DateTime.Now;
+        //     CheckEndTurn();
+        // }
     }
 
 
-    private void CheckEndTurn()
-    {
-        int SecondsRemaining = (TurnDuration - (ActiveTurnTimer - StartTurnTimer).Seconds);
-        TurnTimer.text = "Time Remaining: " + SecondsRemaining.ToString();
+    // private void CheckEndTurn()
+    // {
+    //     int SecondsRemaining = (TurnDuration - (ActiveTurnTimer - StartTurnTimer).Seconds);
+    //     TurnTimer.text = "Time Remaining: " + SecondsRemaining.ToString();
 
-        if (SecondsRemaining > 5)
-        {
-            TurnTimer.color = new Color(.79f, .82f, .16f);
-        }
-        else if (SecondsRemaining % 2 == 0)
-        {
-            TurnTimer.color = new Color(1f, .3f, .15f);
-        }
-        else
-        {
-            TurnTimer.color = new Color(1f, .2f, 0);
-        }
+    //     if (SecondsRemaining > 5)
+    //     {
+    //         TurnTimer.color = new Color(.79f, .82f, .16f);
+    //     }
+    //     else if (SecondsRemaining % 2 == 0)
+    //     {
+    //         TurnTimer.color = new Color(1f, .3f, .15f);
+    //     }
+    //     else
+    //     {
+    //         TurnTimer.color = new Color(1f, .2f, 0);
+    //     }
 
-        if (ActiveTurnTimer > StartTurnTimer.AddSeconds(TurnDuration))
-        {
-            EndTurn();
-        }
-    }
+    //     if (ActiveTurnTimer > StartTurnTimer.AddSeconds(TurnDuration))
+    //     {
+    //         EndTurn();
+    //     }
+    // }
 
     //setups
     protected void Awake()
     {
-        this.NumAvailableAttacks = this.NumberOfAttacksPerTurn;
 
-        Results.ReservoirLimit = ReservoirLimit;// not sure about this maybe should put properly into a script in a serperate gameobject
+        //Results.ReservoirLimit = ReservoirLimit;// not sure about this maybe should put properly into a script in a serperate gameobject
 
-        oracles = new List<Oracle>();
+        //oracles = new List<Oracle>();
+        /* 
         TurnText.gameObject.SetActive(true);
         ScreenCover.gameObject.SetActive(false);
         ScreenCover.fillCenter = true;
+        */
 
     }
 
@@ -113,90 +115,161 @@ public class GameController : MonoBehaviour
         }*/
 
         Debug.Log("START TURN:");
-        this.EndTurn();
-        Debug.Log("END TURN:");
+        
+        StartCoroutine(TurnLoop());
+        Debug.Log("Game has finished");
         StartTurnTimer = DateTime.Now;
         ActiveTurn = true;
     }
 
-    public void EndTurn()
+    
+    
+
+    IEnumerator  TurnLoop()
+    {
+        //--setupgame
+        //put pre game start here
+        WaterFlowController.SimulateWater();
+        bool gamestart= true;
+        ActiveTurn=false;
+
+        while(gamestart)
+        {
+            Debug.Log(GameState + " is starting");
+            StartTurn();            
+            Debug.Log(GameState + " setup is complete");
+            //update ui to new turn
+            UIManager.SetUpTurn(GameState);
+            //Debug.LogError("STOPHERE");
+            while(ActiveTurn) //loop until turn is done.
+            {
+                yield return null; //code will resume after next update
+                //Debug.LogError("LOOPING");
+            }
+            EndTurn();
+            Debug.Log(GameState + " has ended.");
+            yield return null;
+        }
+
+    }
+
+    public void NextTurn()
     {
         ActiveTurn = false;
-
-        if (this.GameState == GameState.AttackerTurn) //defender
-        {
-
-            this.GameState = GameState.DefenderTurn;
-            Debug.Log(GameState);
-            this.AttackerUI.SetActive(false);
-            TurnText.text = "Defender's Turn";
-            TurnText.color = new Color(0, .5F, 1F);
-        }
-        else //attacker turn
-        {
-
-            this.GameState = GameState.AttackerTurn;
-
-            Debug.Log("THIS IS:" + GameState);
-            this.NumAvailableAttacks = this.NumberOfAttacksPerTurn; //resets
-
-            this.AttackerUI.SetActive(true);
-            
-            WaterFlowController.SimulateWater();
-
-            /* 
-            for (int i = 0; i < 2; i++)
-            {
-                this.WaterFlowController.TickModules();
-
-            }*/
-
-            //OracleEnabler();
-
-            if (++Turn >= TurnLimit)
-            {
-                Results.ReservoirFill = Reservoir.WaterList.Count;
-
-                Debug.Log("LoadingNextScene");
-                this.SceneLoader.LoadNextScene();
-            }
-            ReservoirCounter.text = Reservoir.WaterList.Count.ToString();
-            TurnCounter.text = "Turn: " + Turn + "/" + TurnLimit;
-            TurnText.text = "Attacker's Turn";
-            TurnText.color = new Color(1F, 0, 0);
-
-        }
-
-        ScreenCover.gameObject.GetComponentsInChildren<Text>()[0].text = TurnText.text;
-        ScreenCover.gameObject.GetComponentsInChildren<Text>()[0].color = TurnText.color;
-
-        StartCoroutine(WaitForClick());
     }
-
-
-
-
-    protected IEnumerator WaitForClick()
+    public void StartTurn()
     {
-        //Puts up the screen cover
-        ScreenCover.gameObject.SetActive(true);
-        GameUI.SetActive(false);
-        GameBoard.SetActive(false);
-        TurnTimer.gameObject.SetActive(false);
+        if(this.GameState == GameState.AttackerTurn)
+        {
+            UIManager.current.ShowWaterIndicatorTrigger();
+        }
+        else //defender turn
+        {
 
-        //waits for click
-        yield return new WaitWhile(() => !Input.GetMouseButtonDown(0));
 
-        //puts doesn screen cover
-        ScreenCover.gameObject.SetActive(false);
-        TurnTimer.gameObject.SetActive(true);
-        GameUI.SetActive(true);
-        GameBoard.SetActive(true);
+            UIManager.current.HideWaterIndicatorTrigger();
+        }
+        ActiveTurn=true;
+        
 
-        ActiveTurn = true;
-        StartTurnTimer = DateTime.Now;
-        //OracleEnabler();
+
     }
+    public void EndTurn()
+    {
+        if(GameState == GameState.AttackerTurn)
+        {
+            //attacker ending turn
+            GameState = GameState.DefenderTurn;
+
+        }
+        else 
+        {
+            //defender ending turn
+            GameState = GameState.AttackerTurn; 
+        }
+
+    }
+
+    // public void EndTurn()
+    // {
+    //     ActiveTurn = false;
+
+    //     if (this.GameState == GameState.AttackerTurn) //defender
+    //     {
+
+    //         this.GameState = GameState.DefenderTurn;
+    //         Debug.Log(GameState);
+    //         this.AttackerUI.SetActive(false);
+    //         TurnText.text = "Defender's Turn";
+    //         TurnText.color = new Color(0, .5F, 1F);
+    //     }
+    //     else //attacker turn
+    //     {
+
+    //         this.GameState = GameState.AttackerTurn;
+
+    //         Debug.Log("THIS IS:" + GameState);
+    //         this.NumAvailableAttacks = this.attackResource; //todo fix
+
+
+    //         this.AttackerUI.SetActive(true);
+            
+    //         WaterFlowController.SimulateWater();
+
+    //         /* 
+    //         for (int i = 0; i < 2; i++)
+    //         {
+    //             this.WaterFlowController.TickModules();
+
+    //         }*/
+
+    //         //OracleEnabler();
+
+    //         if (++Turn >= TurnLimit)
+    //         {
+    //             Results.ReservoirFill = Reservoir.WaterList.Count;
+
+    //             Debug.Log("LoadingNextScene");
+    //             this.SceneLoader.LoadNextScene();
+    //         }
+    //         //ReservoirCaounter.text = Reservoir.WaterList.Count.ToString();
+
+    //         TurnCounter.text = "Turn: " + Turn + "/" + TurnLimit;
+    //         TurnText.text = "Attacker's Turn";
+    //         TurnText.color = new Color(1F, 0, 0);
+
+    //     }
+
+    //     //ScreenCover.gameObject.GetComponentsInChildren<Text>()[0].text = TurnText.text;
+    //     //ScreenCover.gameObject.GetComponentsInChildren<Text>()[0].color = TurnText.color;
+
+    //     StartCoroutine(WaitForClick());
+    // }
+
+
+
+
+    // protected IEnumerator WaitForClick()
+    // {
+    //     //Puts up the screen cover
+    //     ScreenCover.gameObject.SetActive(true);
+    //     GameUI.SetActive(false);
+    //     GameBoard.SetActive(false);
+    //     TurnTimer.gameObject.SetActive(false);
+
+    //     //waits for click
+    //     yield return new WaitWhile(() => !Input.GetMouseButtonDown(0));
+
+    //     //puts doesn screen cover
+    //     ScreenCover.gameObject.SetActive(false);
+    //     TurnTimer.gameObject.SetActive(true);
+    //     GameUI.SetActive(true);
+    //     GameBoard.SetActive(true);
+
+    //     ActiveTurn = true;
+    //     StartTurnTimer = DateTime.Now;
+    //     //OracleEnabler();
+    // }
     /* 
     private void OracleEnabler()
     {
