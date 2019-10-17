@@ -44,13 +44,14 @@ public abstract class Module : MonoBehaviour
     private Text displayTextContent;
 
     protected Dropdown[] AttackDropdowns;
-
     
     public bool HasFlow {
         get {
             return this.Water != null;
         }
     }
+    
+    public bool temp=false;
     private GameObject attackedIndicatorInstance;
     private Canvas rootCanvas;
     public GameObject WaterIndicator;
@@ -58,6 +59,7 @@ public abstract class Module : MonoBehaviour
     //-------TEMPORARY------
      void Update()
     {
+        temp=HasFlow;
     }
 
     protected void Start()
@@ -75,7 +77,7 @@ public abstract class Module : MonoBehaviour
     }
     private void onShowWaterIndicator()
     {        
-        if(!HasFlow)
+        if(HasFlow)
             WaterIndicator.SetActive(true);        
     }
 
@@ -238,7 +240,7 @@ public abstract class Module : MonoBehaviour
     /// <summary>
     /// Defines interaction with mouse
     /// </summary>
-    private void OnMouseOver()
+    public virtual void OnMouseOver()
     {
         if(GameController.current.GameState == GameState.AttackerTurn)
         {

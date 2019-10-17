@@ -162,6 +162,7 @@ public class GameController : MonoBehaviour
         if(this.GameState == GameState.AttackerTurn)
         {
             UIManager.current.ShowWaterIndicatorTrigger();
+
         }
         else //defender turn
         {
@@ -188,109 +189,4 @@ public class GameController : MonoBehaviour
 
     }
 
-    // public void EndTurn()
-    // {
-    //     ActiveTurn = false;
-
-    //     if (this.GameState == GameState.AttackerTurn) //defender
-    //     {
-
-    //         this.GameState = GameState.DefenderTurn;
-    //         Debug.Log(GameState);
-    //         this.AttackerUI.SetActive(false);
-    //         TurnText.text = "Defender's Turn";
-    //         TurnText.color = new Color(0, .5F, 1F);
-    //     }
-    //     else //attacker turn
-    //     {
-
-    //         this.GameState = GameState.AttackerTurn;
-
-    //         Debug.Log("THIS IS:" + GameState);
-    //         this.NumAvailableAttacks = this.attackResource; //todo fix
-
-
-    //         this.AttackerUI.SetActive(true);
-            
-    //         WaterFlowController.SimulateWater();
-
-    //         /* 
-    //         for (int i = 0; i < 2; i++)
-    //         {
-    //             this.WaterFlowController.TickModules();
-
-    //         }*/
-
-    //         //OracleEnabler();
-
-    //         if (++Turn >= TurnLimit)
-    //         {
-    //             Results.ReservoirFill = Reservoir.WaterList.Count;
-
-    //             Debug.Log("LoadingNextScene");
-    //             this.SceneLoader.LoadNextScene();
-    //         }
-    //         //ReservoirCaounter.text = Reservoir.WaterList.Count.ToString();
-
-    //         TurnCounter.text = "Turn: " + Turn + "/" + TurnLimit;
-    //         TurnText.text = "Attacker's Turn";
-    //         TurnText.color = new Color(1F, 0, 0);
-
-    //     }
-
-    //     //ScreenCover.gameObject.GetComponentsInChildren<Text>()[0].text = TurnText.text;
-    //     //ScreenCover.gameObject.GetComponentsInChildren<Text>()[0].color = TurnText.color;
-
-    //     StartCoroutine(WaitForClick());
-    // }
-
-
-
-
-    // protected IEnumerator WaitForClick()
-    // {
-    //     //Puts up the screen cover
-    //     ScreenCover.gameObject.SetActive(true);
-    //     GameUI.SetActive(false);
-    //     GameBoard.SetActive(false);
-    //     TurnTimer.gameObject.SetActive(false);
-
-    //     //waits for click
-    //     yield return new WaitWhile(() => !Input.GetMouseButtonDown(0));
-
-    //     //puts doesn screen cover
-    //     ScreenCover.gameObject.SetActive(false);
-    //     TurnTimer.gameObject.SetActive(true);
-    //     GameUI.SetActive(true);
-    //     GameBoard.SetActive(true);
-
-    //     ActiveTurn = true;
-    //     StartTurnTimer = DateTime.Now;
-    //     //OracleEnabler();
-    // }
-    /* 
-    private void OracleEnabler()
-    {
-
-        if (this.GameState == GameState.DefenderTurn)
-        {
-            Debug.Log("Enabling Oracles");
-            foreach (Oracle o in this.oracles) //enable oracles
-            {
-                o.InputActive = true;
-                o.setAnimationState("searching"); //possibly change this to a global like gamestate
-            }
-        }
-        else
-        {
-            Debug.Log("Disabling Oracles");
-            foreach (Oracle o in this.oracles) //disable oracles
-            {
-                o.InputActive = false;
-                o.ApplyRule();
-                o.setAnimationState("idle"); //possibly change this to a global like gamestate
-            }
-
-        }
-    }*/
 }

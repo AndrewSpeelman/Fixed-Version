@@ -113,7 +113,7 @@ public class WaterFlowController : MonoBehaviour
                 m.WaterIndicator.SetActive(true);
         }
         //update indicators
-
+        //Debug.LogError("STOP");
         //there is a bug on this, doesn't hide or show properly because listeners have not been added all properly
         //UIManager.current.HideWaterIndicatorTrigger();
         //UIManager.current.ShowWaterIndicatorTrigger();
@@ -133,26 +133,5 @@ public class WaterFlowController : MonoBehaviour
         UpdateWater();
 
 
-    }
-    //not used for now
-    public void TickModules()
-    {
-        index++;
-        Debug.Log("Tick Module: " + index);
-        this.Reservoir.Tick(); //this also calls the onflow method //this sucks in 
-
-        this.firstModule.Water = new WaterObject();
-        //StartWaterFlow(5f);
-    }
-
-    /// <summary>
-    /// Starts ticking time forward for the modules in regular intervals
-    /// </summary>
-    /// <param name="secondsBetweenTicks">The amount of time in between ticks</param>
-    public void StartWaterFlow(float secondsBetweenTicks)
-    {
-
-        Debug.Log("Invoke Repeating Tick Modules with " + secondsBetweenTicks + " seconds between ticks");
-        this.InvokeRepeating("TickModules", 0.1f, secondsBetweenTicks);
     }
 }
