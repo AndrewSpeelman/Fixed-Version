@@ -162,11 +162,13 @@ public class GameController : MonoBehaviour
         if(this.GameState == GameState.AttackerTurn)
         {
             UIManager.current.ShowWaterIndicatorTrigger();
+            UIManager.current.AttackerTurnTrigger();
 
         }
         else //defender turn
         {
             UIManager.current.HideWaterIndicatorTrigger();
+            UIManager.current.DefenderTurnTrigger();
         }
         ActiveTurn=true;
         

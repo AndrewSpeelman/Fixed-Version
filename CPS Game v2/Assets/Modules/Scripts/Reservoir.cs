@@ -13,6 +13,7 @@ public class Reservoir : Module
         {
             if (Input.GetMouseButtonDown(0))
             {
+                UIManager.current.GuessWater(this);
                 //check if there is water?
                 Debug.Log("Is there water here: "+ HasFlow);        
             }

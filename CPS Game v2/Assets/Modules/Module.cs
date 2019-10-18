@@ -9,6 +9,11 @@ using UnityEngine.UI;
 /// </summary>
 public abstract class Module : MonoBehaviour
 {
+    //----
+    [SerializeField]
+    private int id = 0;
+    private static int idCounter = 0;
+    //
     public GameObject popupPrefab;
     public GameObject AttackedIndicator;
 
@@ -43,50 +48,45 @@ public abstract class Module : MonoBehaviour
     private Text displayTextTitle;
     private Text displayTextContent;
 
+    private GameObject AttackerVisualparent;
+    private GameObject DefenderVisualparent;
+    public GameObject AttackerVisual;
+    public GameObject DefenderVisual;
+
     protected Dropdown[] AttackDropdowns;
-    
-    public bool HasFlow {
-        get {
+
+    public bool HasFlow
+    {
+        get
+        {
             return this.Water != null;
         }
     }
-    
-    public bool temp=false;
+
+    public bool temp = false;
     private GameObject attackedIndicatorInstance;
     private Canvas rootCanvas;
     public GameObject WaterIndicator;
+    [SerializeField]
+    private Vector3 visualOffset = new Vector3(0.0f, 1.3f, 0.0f);
+    private Vector3 waterIndicatorOffset = new Vector3(0.0f, 1.2f, 0.0f);
 
     //-------TEMPORARY------
-     void Update()
+    void Update()
     {
-        temp=HasFlow;
     }
 
     protected void Start()
     {
         UIManager.current.onHideWaterIndicatorTrigger += onHideWaterIndicator;
         UIManager.current.onShowWaterIndicatorTrigger += onShowWaterIndicator;
-        WaterFlowController.current.listenercounttest ++;
 
-    } 
+        UIManager.current.onAttackerTurnTrigger += onAttackerTurn;
+        UIManager.current.onDefenderTurnTrigger += onDefenderTurn;
 
-    //UIwaterIndicator event system
-    private void onHideWaterIndicator()
-    {
-        WaterIndicator.SetActive(false);        
-    }
-    private void onShowWaterIndicator()
-    {        
-        if(HasFlow)
-            WaterIndicator.SetActive(true);        
-    }
+        WaterFlowController.current.listenercounttest++;
 
-    private void OnDestroy()
-    {        
-        UIManager.current.onHideWaterIndicatorTrigger -= onHideWaterIndicator;
-        UIManager.current.onShowWaterIndicatorTrigger -= onShowWaterIndicator;
     }
-    //-----------------
 
     public virtual bool IsFilter()
     {
@@ -98,58 +98,93 @@ public abstract class Module : MonoBehaviour
         return false;
     }
 
+    //UIwaterIndicator event system
+    private void onHideWaterIndicator()
+    {
+        WaterIndicator.SetActive(false);
+    }
+    private void onShowWaterIndicator()
+    {
+        if (HasFlow)
+            WaterIndicator.SetActive(true);
+    }
+    protected virtual void onAttackerTurn()
+    {
+        AttackerVisualparent.SetActive(true);
+        DefenderVisualparent.SetActive(false);
+    }
+    protected virtual void onDefenderTurn()
+    {
+
+        AttackerVisualparent.SetActive(false);
+        DefenderVisualparent.SetActive(true);
+    }
+
+    private void OnDestroy()
+    {
+        UIManager.current.onHideWaterIndicatorTrigger -= onHideWaterIndicator;
+        UIManager.current.onShowWaterIndicatorTrigger -= onShowWaterIndicator;
+    }
+    //-----------------
+
     //notes- not sure if displayTextTitle is used anywhere else
     /// <summary>
     /// makes fields
     /// finds canvas, instantiates 
     /// </summary>
-    private void Awake() {
-        //temporary for debug purposes
-
-        WaterIndicator = Instantiate(WaterIndicator, this.WaterIndicator.transform.position, this.WaterIndicator.transform.rotation);
-        WaterIndicator.transform.SetParent(this.gameObject.transform);
-        WaterIndicator.transform.position = transform.position;
-        /* 
-        //This is attached to update populdisplay
-        this.displayFields = new List<string>
-        {
-            "Attacked",
-            "Capacity",
-            "HasFlow",
-            "WaterAmount"
-        };
-
-        Capacity = 1;*/
-        rootCanvas = (Canvas)FindObjectOfType(typeof(Canvas));
-	}
-
-
-    /// <summary>
-    /// Moves water through system if specified pump is on. Then calls Tick for previous module.
-    /// ----------obselete-------
-    /// </summary>
-    public virtual void Tick()
+    private void Awake()
     {
-
-        if (this.InFlowingPump.On)
-        {
-            this.OnFlow();
-        }
-
-        /*if (Water.Amount > this.Capacity)
-        {
-            this.OnOverflow();
-        }*/
-
-        //this.UpdatePopupDisplay();
-        Debug.Log("I AM: "+gameObject.name);
-        if (this.PreviousModule)
-        {
-            
-            Debug.Log("Calling : "+PreviousModule.name);
-            this.PreviousModule.Tick();
-        }
+        id=idCounter;
+        idCounter++;
+        
+        HandleWaterIndicator();
+        HandleVisualIndicator();
+        rootCanvas = (Canvas)FindObjectOfType(typeof(Canvas));
     }
+
+    private void HandleWaterIndicator()
+    {
+        WaterIndicator = Instantiate(WaterIndicator, WaterIndicator.transform.position, WaterIndicator.transform.rotation);
+        WaterIndicator.transform.SetParent(this.gameObject.transform);
+        WaterIndicator.transform.position = transform.position + waterIndicatorOffset;
+    }
+    private void HandleVisualIndicator()
+    {
+        //AttackerIndicators
+        if (AttackerVisualparent == null)
+            AttackerVisualparent = new GameObject();
+
+        AttackerVisualparent.name = "Attacker Visual";
+        AttackerVisualparent.transform.SetParent(this.gameObject.transform);
+        AttackerVisualparent.transform.position = transform.position + visualOffset;
+
+        AttackerVisualparent.AddComponent(typeof(AttackVisual));
+
+        if(AttackerVisual !=null)
+        {
+            AttackerVisual = Instantiate(AttackerVisual, AttackerVisual.transform.position,AttackerVisual.transform.rotation);
+            
+            AttackerVisual.transform.SetParent(AttackerVisualparent.transform);
+            AttackerVisual.transform.position = AttackerVisualparent.transform.position;
+        }
+
+        //DefenderIndicators
+        if (DefenderVisualparent == null)
+            DefenderVisualparent = new GameObject();
+
+        DefenderVisualparent = new GameObject();
+        DefenderVisualparent.name = "Defender Visual";
+        DefenderVisualparent.transform.SetParent(this.gameObject.transform);
+         DefenderVisualparent.transform.position = transform.position + visualOffset;
+        if(DefenderVisual != null)
+        {
+            DefenderVisual = Instantiate(DefenderVisual, DefenderVisual.transform.position,DefenderVisual.transform.rotation);            
+            DefenderVisual.transform.SetParent(DefenderVisualparent.transform);
+            DefenderVisual.transform.position = DefenderVisualparent.transform.position;
+        }
+
+    }
+
 
     /// <summary>
     /// Recursive. Water flows. Stops if current systems is blocked (override this depending on type)
@@ -158,14 +193,14 @@ public abstract class Module : MonoBehaviour
     {
         //only flows if water is available from previous and not blocked
 
-        bool blocked= false; //make this public later
-        if(PreviousModule.Water != null && !blocked) 
-        { 
+        bool blocked = false; //make this public later
+        if (PreviousModule.Water != null && !blocked)
+        {
             //take water from previous then moved to new modules
-            this.Water = PreviousModule.Water;           
-            if(NextModule != null)
+            this.Water = PreviousModule.Water;
+            if (NextModule != null)
             {
-                foreach(Module next in NextModule)
+                foreach (Module next in NextModule)
                 {
                     next.WaterFlow();
                 }
@@ -174,67 +209,24 @@ public abstract class Module : MonoBehaviour
         }
     }
 
-  
 
 
-    /// <summary>
-    /// Only called when the pump is on.  Brings as much water as it can from the previous module into this one.
-    /// Override for custom functionality in modules!
-    /// </summary>
-    protected virtual void OnFlow()
-    {
-        //previous module has to exist
-        if (this.PreviousModule && this.Water == null)
-        {
-            //basically just moves the water into this module
-            this.Water = this.PreviousModule.Water;
-            this.PreviousModule.Water = null;
-        }
-    }
-
-    /// <summary>
-    /// Override to specify how the module behaves when fill exceeds capacity.  (Can only occur if OnFlow is overritten)
-    /// </summary>
-    protected virtual void OnOverflow()
-    {
-
-    }
 
     /// <summary>
     /// What to do when the attacker attacks the module
     /// </summary>
+
     public virtual void Attack()
     {
         this.Attacked = !this.Attacked;
         WaterFlowController.current.SimulateWater();
-        
+
+        //Applies to only gameobjects below this. Intended for the scripts
+        // attached to the visual particles
+        gameObject.BroadcastMessage("AttackedTrigger");
+
         //resimulate the water
 
-    }
-
-    /// <summary>
-    /// what to do when the module is no longer being attacked
-    /// </summary>
-    public void Fix()
-    {
-        if (this.Attacked)
-        {
-            this.Attacked = false;
-            this.attackedIndicatorInstance.SetActive(false);
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// Adds back an attack and fixes attacked module.
-    /// </summary>
-    public void ReverseAttack()
-    {
-        if (this.Attacked)
-        {
-            GameController.current.NumAvailableAttacks++;
-            this.Fix();
-        }
     }
 
     /// <summary>
@@ -242,46 +234,15 @@ public abstract class Module : MonoBehaviour
     /// </summary>
     public virtual void OnMouseOver()
     {
-        if(GameController.current.GameState == GameState.AttackerTurn)
+        if (GameController.current.GameState == GameState.AttackerTurn)
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log("ATTACKED: "+ gameObject.name);
-                this.Attack();            }
-
-        }
-    }
-
-    /// <summary>
-    /// True if the lhs module appears earlier in the system than the rhs
-    /// </summary>
-    /// <param name="lhs">first module to compare</param>
-    /// <param name="rhs">second module to compare</param>
-    /// <returns></returns>
-    public static bool operator <(Module lhs, Module rhs)
-    {
-        Module currMod = rhs.PreviousModule;
-        while (currMod)
-        {
-            if (currMod == lhs)
-            {
-                return true;
+                Debug.Log("ATTACKED: " + gameObject.name);
+                this.Attack();
             }
 
-            currMod = currMod.PreviousModule;
         }
-
-        return false;
     }
 
-    /// <summary>
-    /// True if the lhs module appears later in the system than the rhs
-    /// </summary>
-    /// <param name="lhs">first module to compare</param>
-    /// <param name="rhs">second module to compare</param>
-    /// <returns></returns>
-    public static bool operator >(Module lhs, Module rhs)
-    {
-        return (!(lhs < rhs) && lhs != rhs);
-    }
 }

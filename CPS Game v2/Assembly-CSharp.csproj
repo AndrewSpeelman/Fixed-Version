@@ -74,6 +74,7 @@
      <Compile Include="Assets\Modules\UI\UIManager.cs" />
      <Compile Include="Assets\Results.cs" />
      <Compile Include="Assets\SceneLoader.cs" />
+     <Compile Include="Assets\Scripts\AttackVisual.cs" />
      <Compile Include="Assets\StartButton.cs" />
      <Compile Include="Assets\TextController.cs" />
      <Compile Include="Assets\thirdperson.cs" />

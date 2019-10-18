@@ -29,6 +29,8 @@ public class UIManager : MonoBehaviour
     
     public event Action onHideWaterIndicatorTrigger;
     public event Action onShowWaterIndicatorTrigger;
+    public event Action onAttackerTurnTrigger;
+    public event Action onDefenderTurnTrigger;
     public void HideWaterIndicatorTrigger()
     {
         if(onHideWaterIndicatorTrigger!=null)
@@ -44,7 +46,21 @@ public class UIManager : MonoBehaviour
             onShowWaterIndicatorTrigger();
         }
     }
-
+    public void DefenderTurnTrigger()
+    {
+        if(onDefenderTurnTrigger!=null)
+        {
+            onDefenderTurnTrigger();
+        }
+    }
+    public void AttackerTurnTrigger()
+    {
+        if(onAttackerTurnTrigger!=null)
+        {
+            onAttackerTurnTrigger();
+        }
+    }
+    //----------------
     public void SetUpTurn(GameState currentState)
     {
         UpdateTurnText(currentState);
@@ -68,6 +84,12 @@ public class UIManager : MonoBehaviour
             TurnText.text = AttackerName;
         }
 
+    }
+
+    //Defender Visual Actions
+    public void GuessWater(Module m)
+    {
+        m.DefenderVisual.SetActive(!m.DefenderVisual.activeSelf);
     }
 
     
