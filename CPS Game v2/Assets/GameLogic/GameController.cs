@@ -50,15 +50,6 @@ public class GameController : MonoBehaviour
     public GameState GameState = GameState.AttackerTurn;
 
     private List<Oracle> oracles;
-    protected void Update()
-    {
-        // if (ActiveTurn) //can possibly optimize with coroutines.
-        // {
-        //     //Debug.Log("ACTIVE: " + GameState);
-        //     ActiveTurnTimer = DateTime.Now;
-        //     CheckEndTurn();
-        // }
-    }
 
 
     // private void CheckEndTurn()
@@ -101,19 +92,6 @@ public class GameController : MonoBehaviour
     //I think it doesn't have a turn timer
     protected void Start()
     {
-        //added here so that capacity=1 in module doesn't override. Could also change script execution order
-        Reservoir.Capacity = ReservoirLimit;
-
-        //makes oracles-- owls---
-        /* 
-        for (int i = 0; i < this.NumberOfOracles; i++)
-        {
-            var newOracle = Instantiate(this.OraclePrefab, new Vector3(this.OracleSpawnPoint.transform.position.x + (i * 2),
-                this.OracleSpawnPoint.transform.position.y, this.OracleSpawnPoint.transform.position.z),
-                this.OraclePrefab.transform.rotation);
-            oracles.Add(newOracle.GetComponent<Oracle>());
-        }*/
-
         Debug.Log("START TURN:");
         
         StartCoroutine(TurnLoop());
@@ -170,11 +148,9 @@ public class GameController : MonoBehaviour
             UIManager.current.HideWaterIndicatorTrigger();
             UIManager.current.DefenderTurnTrigger();
         }
-        ActiveTurn=true;
-        
-
-
+        ActiveTurn=true;   
     }
+
     public void EndTurn()
     {
         if(GameState == GameState.AttackerTurn)

@@ -9,6 +9,15 @@ public class UIManager : MonoBehaviour
     public static UIManager current;
     public Text TurnText;
     [SerializeField]
+    public  GameObject AttackVisual_Generic;
+    [SerializeField]
+    public  GameObject DefendVisual_Generic;
+    [SerializeField]
+    public  GameObject AttackVisual_Resovoir;
+    [SerializeField]
+    public  GameObject DefendVisual_Resovoir;
+    
+    [SerializeField]
     private string AttackerName = "Attacker";
     [SerializeField]
     private string DefenderName = "Defender";
@@ -87,6 +96,7 @@ public class UIManager : MonoBehaviour
     }
 
     //Defender Visual Actions
+    
     public void GuessWater(Module m)
     {
         m.DefenderVisual.SetActive(!m.DefenderVisual.activeSelf);

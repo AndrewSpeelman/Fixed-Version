@@ -55,25 +55,25 @@
   <ItemGroup>
      <Compile Include="Assets\Modules\Editor\ModuleEditor.cs" />
  <Reference Include="Unity.TextMeshPro.Editor">
- <HintPath>F:/DesktopFolders/School/CPS/Restart/CPS Game v2/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+ <HintPath>F:/DesktopFolders/School/CPS/Restart/Fixed-Version/CPS Game v2/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.PackageManagerUI.Editor">
- <HintPath>F:/DesktopFolders/School/CPS/Restart/CPS Game v2/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+ <HintPath>F:/DesktopFolders/School/CPS/Restart/Fixed-Version/CPS Game v2/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.CollabProxy.Editor">
- <HintPath>F:/DesktopFolders/School/CPS/Restart/CPS Game v2/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+ <HintPath>F:/DesktopFolders/School/CPS/Restart/Fixed-Version/CPS Game v2/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Postprocessing.Editor">
- <HintPath>F:/DesktopFolders/School/CPS/Restart/CPS Game v2/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
+ <HintPath>F:/DesktopFolders/School/CPS/Restart/Fixed-Version/CPS Game v2/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Postprocessing.Runtime">
- <HintPath>F:/DesktopFolders/School/CPS/Restart/CPS Game v2/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
+ <HintPath>F:/DesktopFolders/School/CPS/Restart/Fixed-Version/CPS Game v2/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro">
- <HintPath>F:/DesktopFolders/School/CPS/Restart/CPS Game v2/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+ <HintPath>F:/DesktopFolders/School/CPS/Restart/Fixed-Version/CPS Game v2/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Analytics.DataPrivacy">
- <HintPath>F:/DesktopFolders/School/CPS/Restart/CPS Game v2/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+ <HintPath>F:/DesktopFolders/School/CPS/Restart/Fixed-Version/CPS Game v2/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>F:/Unity/2018.3.4f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -310,19 +310,19 @@
  <HintPath>F:/Unity/2018.3.4f1/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.Advertisements">
- <HintPath>F:/DesktopFolders/School/CPS/Restart/CPS Game v2/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
+ <HintPath>F:/DesktopFolders/School/CPS/Restart/Fixed-Version/CPS Game v2/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Analytics.Editor">
- <HintPath>F:/DesktopFolders/School/CPS/Restart/CPS Game v2/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
+ <HintPath>F:/DesktopFolders/School/CPS/Restart/Fixed-Version/CPS Game v2/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Analytics.StandardEvents">
- <HintPath>F:/DesktopFolders/School/CPS/Restart/CPS Game v2/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+ <HintPath>F:/DesktopFolders/School/CPS/Restart/Fixed-Version/CPS Game v2/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Analytics.Tracker">
- <HintPath>F:/DesktopFolders/School/CPS/Restart/CPS Game v2/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+ <HintPath>F:/DesktopFolders/School/CPS/Restart/Fixed-Version/CPS Game v2/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.Purchasing">
- <HintPath>F:/DesktopFolders/School/CPS/Restart/CPS Game v2/Library/PackageCache/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll</HintPath>
+ <HintPath>F:/DesktopFolders/School/CPS/Restart/Fixed-Version/CPS Game v2/Library/PackageCache/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="mscorlib">
  <HintPath>F:/Unity/2018.3.4f1/Editor/Data/MonoBleedingEdge/lib/mono/2.0-api/mscorlib.dll</HintPath>

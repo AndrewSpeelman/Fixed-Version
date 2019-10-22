@@ -29,14 +29,25 @@ public class Pump : Module
 
     private bool on = true;
 
-    private new void Start()
+    
+    protected override void SetUpVariables()
     {
-        //this.displayFields.Add("On");
-        base.Start();
+        canbeAttacked = false;
     }
 
     public override bool IsPump()
     {
         return true;
+    }
+
+    protected override void  HandleAttackVisualIndicator()
+    {
+        //AttackerIndicators    
+        AttackerVisual = new GameObject();
+        
+        AttackerVisual.name = "Attacker Visual";
+        AttackerVisual.transform.SetParent(this.gameObject.transform);
+        AttackerVisual.transform.position = transform.position + visualOffset;
+
     }
 }

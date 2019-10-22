@@ -28,28 +28,8 @@ public abstract class Module : MonoBehaviour
 
     public List<WaterObject> WaterList = new List<WaterObject>();
     [SerializeField]
+    protected bool canbeAttacked = true;
 
-    //BY DEFAULT, ALL MODULES HAVE 1 CAPACITY
-
-    private int capacity;
-    public virtual int Capacity
-    {
-        get { return capacity; }
-        set { capacity = value; }
-    }
-
-    // public virtual int WaterAmount
-    // {
-    //     get { return WaterList.Count; }
-    // }
-
-    protected List<string> displayFields;
-    private GameObject popupInstance;
-    private Text displayTextTitle;
-    private Text displayTextContent;
-
-    private GameObject AttackerVisualparent;
-    private GameObject DefenderVisualparent;
     public GameObject AttackerVisual;
     public GameObject DefenderVisual;
 
@@ -62,13 +42,10 @@ public abstract class Module : MonoBehaviour
             return this.Water != null;
         }
     }
-
-    public bool temp = false;
-    private GameObject attackedIndicatorInstance;
     private Canvas rootCanvas;
     public GameObject WaterIndicator;
     [SerializeField]
-    private Vector3 visualOffset = new Vector3(0.0f, 1.3f, 0.0f);
+    protected Vector3 visualOffset = new Vector3(0.0f, 1.3f, 0.0f);
     private Vector3 waterIndicatorOffset = new Vector3(0.0f, 1.2f, 0.0f);
 
     //-------TEMPORARY------
@@ -76,8 +53,24 @@ public abstract class Module : MonoBehaviour
     {
     }
 
-    protected void Start()
+   private void Awake()
     {
+        id=idCounter;
+        idCounter++;
+        
+        rootCanvas = (Canvas)FindObjectOfType(typeof(Canvas));
+        
+        SetUpVariables();
+        
+    }
+
+    private void Start()
+    {
+        
+        SetUpVisuals();
+        HandleWaterIndicator();
+        HandleVisualIndicator();
+
         UIManager.current.onHideWaterIndicatorTrigger += onHideWaterIndicator;
         UIManager.current.onShowWaterIndicatorTrigger += onShowWaterIndicator;
 
@@ -88,6 +81,19 @@ public abstract class Module : MonoBehaviour
 
     }
 
+    //add setup variables here
+    protected virtual void SetUpVariables()
+    {
+        //this is where the variables for each type of module gets placed.
+        //override this
+    }
+
+    //this is setup for the visualization of the modules when a player interacts with it
+    protected virtual void SetUpVisuals()
+    {
+         DefenderVisual= UIManager.current.DefendVisual_Generic;
+         AttackerVisual= UIManager.current.AttackVisual_Generic;
+    }
     public virtual bool IsFilter()
     {
         return false;
@@ -110,38 +116,28 @@ public abstract class Module : MonoBehaviour
     }
     protected virtual void onAttackerTurn()
     {
-        AttackerVisualparent.SetActive(true);
-        DefenderVisualparent.SetActive(false);
+    
+        gameObject.BroadcastMessage("SwitchingTurn", AttackerVisual.name);
     }
     protected virtual void onDefenderTurn()
     {
 
-        AttackerVisualparent.SetActive(false);
-        DefenderVisualparent.SetActive(true);
+        gameObject.BroadcastMessage("SwitchingTurn", DefenderVisual.name);
     }
 
     private void OnDestroy()
     {
         UIManager.current.onHideWaterIndicatorTrigger -= onHideWaterIndicator;
         UIManager.current.onShowWaterIndicatorTrigger -= onShowWaterIndicator;
+
+        
+        UIManager.current.onAttackerTurnTrigger -= onAttackerTurn;
+        UIManager.current.onDefenderTurnTrigger -= onDefenderTurn;
     }
     //-----------------
 
-    //notes- not sure if displayTextTitle is used anywhere else
-    /// <summary>
-    /// makes fields
-    /// finds canvas, instantiates 
-    /// </summary>
-    private void Awake()
-    {
-        id=idCounter;
-        idCounter++;
-        
-        HandleWaterIndicator();
-        HandleVisualIndicator();
-        rootCanvas = (Canvas)FindObjectOfType(typeof(Canvas));
-    }
-
+  
+ 
     private void HandleWaterIndicator()
     {
         WaterIndicator = Instantiate(WaterIndicator, WaterIndicator.transform.position, WaterIndicator.transform.rotation);
@@ -150,39 +146,37 @@ public abstract class Module : MonoBehaviour
     }
     private void HandleVisualIndicator()
     {
-        //AttackerIndicators
-        if (AttackerVisualparent == null)
-            AttackerVisualparent = new GameObject();
+        HandleAttackVisualIndicator();
+        HandleDefendVisualIndicator();       
 
-        AttackerVisualparent.name = "Attacker Visual";
-        AttackerVisualparent.transform.SetParent(this.gameObject.transform);
-        AttackerVisualparent.transform.position = transform.position + visualOffset;
+    }
 
-        AttackerVisualparent.AddComponent(typeof(AttackVisual));
-
-        if(AttackerVisual !=null)
-        {
-            AttackerVisual = Instantiate(AttackerVisual, AttackerVisual.transform.position,AttackerVisual.transform.rotation);
-            
-            AttackerVisual.transform.SetParent(AttackerVisualparent.transform);
-            AttackerVisual.transform.position = AttackerVisualparent.transform.position;
+    protected virtual void HandleAttackVisualIndicator()
+    {        
+        //AttackerIndicators    
+        if (AttackerVisual == null)
+            AttackerVisual = new GameObject();
+        else
+        {            
+            AttackerVisual = Instantiate(AttackerVisual, AttackerVisual.transform.position,     AttackerVisual.transform.rotation);
         }
+        AttackerVisual.name = "Attacker Visual";
+        AttackerVisual.transform.SetParent(this.gameObject.transform);
+        AttackerVisual.transform.position = transform.position + visualOffset;
 
-        //DefenderIndicators
-        if (DefenderVisualparent == null)
-            DefenderVisualparent = new GameObject();
-
-        DefenderVisualparent = new GameObject();
-        DefenderVisualparent.name = "Defender Visual";
-        DefenderVisualparent.transform.SetParent(this.gameObject.transform);
-         DefenderVisualparent.transform.position = transform.position + visualOffset;
-        if(DefenderVisual != null)
-        {
-            DefenderVisual = Instantiate(DefenderVisual, DefenderVisual.transform.position,DefenderVisual.transform.rotation);            
-            DefenderVisual.transform.SetParent(DefenderVisualparent.transform);
-            DefenderVisual.transform.position = DefenderVisualparent.transform.position;
+    }
+    protected virtual void HandleDefendVisualIndicator()
+    {        
+        //DefenderIndicators        
+        if (DefenderVisual == null)
+            DefenderVisual = new GameObject();
+        else
+        {            
+            DefenderVisual = Instantiate(DefenderVisual, DefenderVisual.transform.position,     DefenderVisual.transform.rotation);
         }
-
+        DefenderVisual.name = "Defender Visual";
+        DefenderVisual.transform.SetParent(this.gameObject.transform);
+        DefenderVisual.transform.position = transform.position + visualOffset;
     }
 
 
@@ -210,22 +204,22 @@ public abstract class Module : MonoBehaviour
     }
 
 
-
-
     /// <summary>
     /// What to do when the attacker attacks the module
     /// </summary>
-
     public virtual void Attack()
     {
         this.Attacked = !this.Attacked;
+        //tally up number of attacks
+        
+        //resimulate water
         WaterFlowController.current.SimulateWater();
+
 
         //Applies to only gameobjects below this. Intended for the scripts
         // attached to the visual particles
         gameObject.BroadcastMessage("AttackedTrigger");
 
-        //resimulate the water
 
     }
 
@@ -236,7 +230,7 @@ public abstract class Module : MonoBehaviour
     {
         if (GameController.current.GameState == GameState.AttackerTurn)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (canbeAttacked && Input.GetMouseButtonDown(0) )
             {
                 Debug.Log("ATTACKED: " + gameObject.name);
                 this.Attack();

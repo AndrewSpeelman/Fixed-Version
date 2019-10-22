@@ -655,11 +655,10 @@ MonoBehaviour:
   - {fileID: 597639508}
   InFlowingPump: {fileID: 713928216}
   Attacked: 0
-  capacity: 0
+  canbeAttacked: 1
   AttackerVisual: {fileID: 0}
   DefenderVisual: {fileID: 7956959673495143121, guid: 65c5265857e60ac4cb86e3310d30a2b9,
     type: 3}
-  temp: 0
   WaterIndicator: {fileID: 8773954773977485304, guid: 885afee73fce5a547938732d1b601630,
     type: 3}
   visualOffset: {x: 0, y: 1.3, z: 0}
@@ -923,11 +922,10 @@ MonoBehaviour:
   - {fileID: 918603666}
   InFlowingPump: {fileID: 713928216}
   Attacked: 0
-  capacity: 0
+  canbeAttacked: 1
   AttackerVisual: {fileID: 3642731380271345831, guid: 57928df45c249a349aaab8103cbd4e50,
     type: 3}
   DefenderVisual: {fileID: 0}
-  temp: 0
   WaterIndicator: {fileID: 8773954773977485304, guid: 885afee73fce5a547938732d1b601630,
     type: 3}
   visualOffset: {x: 0, y: 1.3, z: 0}
@@ -1224,10 +1222,9 @@ MonoBehaviour:
   - {fileID: 1401766498}
   InFlowingPump: {fileID: 713928216}
   Attacked: 0
-  capacity: 0
+  canbeAttacked: 1
   AttackerVisual: {fileID: 0}
   DefenderVisual: {fileID: 0}
-  temp: 0
   WaterIndicator: {fileID: 8773954773977485304, guid: 885afee73fce5a547938732d1b601630,
     type: 3}
   visualOffset: {x: 0, y: 1.3, z: 0}
@@ -1400,11 +1397,10 @@ MonoBehaviour:
   - {fileID: 502425198}
   InFlowingPump: {fileID: 713928216}
   Attacked: 0
-  capacity: 0
+  canbeAttacked: 1
   AttackerVisual: {fileID: 3642731380271345831, guid: 57928df45c249a349aaab8103cbd4e50,
     type: 3}
   DefenderVisual: {fileID: 0}
-  temp: 0
   WaterIndicator: {fileID: 8773954773977485304, guid: 885afee73fce5a547938732d1b601630,
     type: 3}
   visualOffset: {x: 0, y: 1.3, z: 0}
@@ -1441,11 +1437,10 @@ MonoBehaviour:
   NextModule: []
   InFlowingPump: {fileID: 713928216}
   Attacked: 0
-  capacity: 0
+  canbeAttacked: 1
   AttackerVisual: {fileID: 0}
   DefenderVisual: {fileID: 7956959673495143121, guid: 65c5265857e60ac4cb86e3310d30a2b9,
     type: 3}
-  temp: 0
   WaterIndicator: {fileID: 8773954773977485304, guid: 885afee73fce5a547938732d1b601630,
     type: 3}
   visualOffset: {x: 0, y: 1.3, z: 0}
@@ -2132,11 +2127,10 @@ MonoBehaviour:
   - {fileID: 877017063}
   InFlowingPump: {fileID: 713928216}
   Attacked: 0
-  capacity: 0
+  canbeAttacked: 1
   AttackerVisual: {fileID: 3642731380271345831, guid: 57928df45c249a349aaab8103cbd4e50,
     type: 3}
   DefenderVisual: {fileID: 0}
-  temp: 0
   WaterIndicator: {fileID: 8773954773977485304, guid: 885afee73fce5a547938732d1b601630,
     type: 3}
   visualOffset: {x: 0, y: 1.3, z: 0}
@@ -2260,6 +2254,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TurnText: {fileID: 1638193651}
+  AttackVisual_Generic: {fileID: 7518327494856492215, guid: 925f80234d75f1a47a5dcafe1d0fa2ed,
+    type: 3}
+  DefendVisual_Generic: {fileID: 7518327494856492215, guid: 41ddb68d5ce421c4aa95e535677ef304,
+    type: 3}
+  AttackVisual_Resovoir: {fileID: 7518327494856492215, guid: 57aa5326a7c91c64a8b9c089174074d7,
+    type: 3}
+  DefendVisual_Resovoir: {fileID: 7518327494856492215, guid: 5fca25feb226be148a6e4096a643e8c2,
+    type: 3}
   AttackerName: Attacker
   DefenderName: Defender
 --- !u!1 &1638193649
