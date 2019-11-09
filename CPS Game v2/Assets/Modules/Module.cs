@@ -30,6 +30,8 @@ public abstract class Module : MonoBehaviour
     [SerializeField]
     protected bool canbeAttacked = true;
 
+    //VISUALS SHOULD JUST BE VISUALS. NO GAMEPLAY ACTIONS
+    //GAMEPLAY SHUOLD CONTINUE STILL IF VISUAL INDICATORS ARE BLANK
     public GameObject AttackerVisual;
     public GameObject DefenderVisual;
 
@@ -53,6 +55,7 @@ public abstract class Module : MonoBehaviour
     {
     }
 
+    #region setup
    private void Awake()
     {
         id=idCounter;
@@ -71,13 +74,18 @@ public abstract class Module : MonoBehaviour
         HandleWaterIndicator();
         HandleVisualIndicator();
 
+    
+        //Add Listeners// IMPORTANT--remember to destroy
         UIManager.current.onHideWaterIndicatorTrigger += onHideWaterIndicator;
         UIManager.current.onShowWaterIndicatorTrigger += onShowWaterIndicator;
 
         UIManager.current.onAttackerTurnTrigger += onAttackerTurn;
-        UIManager.current.onDefenderTurnTrigger += onDefenderTurn;
-
+        UIManager.current.onDefenderTurnTrigger += onDefenderTurn;        
+        
         WaterFlowController.current.listenercounttest++;
+
+        
+        AfterSetup();
 
     }
 
@@ -94,6 +102,9 @@ public abstract class Module : MonoBehaviour
          DefenderVisual= UIManager.current.DefendVisual_Generic;
          AttackerVisual= UIManager.current.AttackVisual_Generic;
     }
+
+    
+    #endregion
     public virtual bool IsFilter()
     {
         return false;
@@ -104,6 +115,7 @@ public abstract class Module : MonoBehaviour
         return false;
     }
 
+    #region Indicators
     //UIwaterIndicator event system
     private void onHideWaterIndicator()
     {
@@ -125,19 +137,13 @@ public abstract class Module : MonoBehaviour
         gameObject.BroadcastMessage("SwitchingTurn", DefenderVisual.name);
     }
 
-    private void OnDestroy()
-    {
-        UIManager.current.onHideWaterIndicatorTrigger -= onHideWaterIndicator;
-        UIManager.current.onShowWaterIndicatorTrigger -= onShowWaterIndicator;
-
-        
-        UIManager.current.onAttackerTurnTrigger -= onAttackerTurn;
-        UIManager.current.onDefenderTurnTrigger -= onDefenderTurn;
-    }
-    //-----------------
+    
 
   
- 
+    protected virtual void AfterSetup()
+    {
+        //Anything Additional Added on after initial setup
+    }
     private void HandleWaterIndicator()
     {
         WaterIndicator = Instantiate(WaterIndicator, WaterIndicator.transform.position, WaterIndicator.transform.rotation);
@@ -179,7 +185,18 @@ public abstract class Module : MonoBehaviour
         DefenderVisual.transform.position = transform.position + visualOffset;
     }
 
+    
+    private void OnDestroy()
+    {
+        UIManager.current.onHideWaterIndicatorTrigger -= onHideWaterIndicator;
+        UIManager.current.onShowWaterIndicatorTrigger -= onShowWaterIndicator;
 
+        
+        UIManager.current.onAttackerTurnTrigger -= onAttackerTurn;
+        UIManager.current.onDefenderTurnTrigger -= onDefenderTurn;
+    }
+    #endregion
+    
     /// <summary>
     /// Recursive. Water flows. Stops if current systems is blocked (override this depending on type)
     /// </summary>   
@@ -204,6 +221,8 @@ public abstract class Module : MonoBehaviour
     }
 
 
+    #region PlayerActions --Anything to do with actions by any party on a module--
+    
     /// <summary>
     /// What to do when the attacker attacks the module
     /// </summary>
@@ -223,8 +242,26 @@ public abstract class Module : MonoBehaviour
 
     }
 
+
     /// <summary>
-    /// Defines interaction with mouse
+    /// What to do when defender interacts with this module
+    /// </summary>
+    protected virtual void DefenderAction()
+    {
+        //Default is nothing
+    }
+
+    /// <summary>
+    /// What to do when attacker interacts with this module
+    /// </summary>
+    public virtual void AttackerAction()
+    {
+        Debug.Log("ATTACKED: " + gameObject.name);
+        this.Attack();
+    }
+
+    /// <summary>
+    /// Actions to take when mouse it hovered// replace later for taps
     /// </summary>
     public virtual void OnMouseOver()
     {
@@ -232,11 +269,21 @@ public abstract class Module : MonoBehaviour
         {
             if (canbeAttacked && Input.GetMouseButtonDown(0) )
             {
-                Debug.Log("ATTACKED: " + gameObject.name);
-                this.Attack();
+                AttackerAction();
+            }
+
+        }
+        else if(GameController.current.GameState == GameState.DefenderTurn)
+        {
+            
+            if (Input.GetMouseButtonDown(0))
+            {
+                Debug.Log("Click!");
+                DefenderAction();
             }
 
         }
     }
+    #endregion  
 
 }

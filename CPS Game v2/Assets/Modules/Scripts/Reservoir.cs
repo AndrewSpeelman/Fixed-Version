@@ -5,27 +5,25 @@ using UnityEngine;
 public class Reservoir : Module
 {
    
-
+   private ModuleVisual DefenderVisual_child;
+   private bool checkPlaced;
+   private bool checkPlacedConfirmed;
+    
     protected override void SetUpVariables()
     {
         canbeAttacked = false;
+        checkPlaced = false;
+        checkPlacedConfirmed = false;
+
+        
     }
 
-    public override void OnMouseOver()
+    protected override void AfterSetup()
     {
-        if(GameController.current.GameState == GameState.DefenderTurn)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                //UIManager.current.GuessWater(this);
-                
-                gameObject.BroadcastMessage("AttackedTrigger");
-                //check if there is water?
-                Debug.Log("Is there water here: "+ HasFlow);        
-            }
+        DefenderVisual_child = DefenderVisual.GetComponent(typeof(ModuleVisual)) as ModuleVisual;
 
-        }
     }
+
 
     //Overriedes
     #region OverrideArea
@@ -39,7 +37,44 @@ public class Reservoir : Module
         AttackerVisual.transform.position = transform.position + visualOffset;
 
     }
+
     
+    /*
+        ---What to do visually when defender clicks on this module--
+
+        Checks if water is here. Has to accept on a seperate ui button to confirm.
+        //Add to list of areas to check
+        //Update visual that this module has added to look out for
+     */
+    protected override void DefenderAction()
+    {        
+        if(DefenderVisual != null)
+        {
+            if(!checkPlaced)
+            {
+                DefenderVisual_child.SetCheckPlacement(true);     
+                checkPlaced= !checkPlaced;           
+            }
+            else if(checkPlaced)
+            {
+                
+                DefenderVisual_child.SetCheckPlacement(false);        
+                checkPlaced= !checkPlaced;            
+            }
+        }
+    }
+
+    
+    #region HandleIndicators
+    private void onShowWaterIndicator()
+    {
+        if (HasFlow)
+            WaterIndicator.SetActive(true);
+    }
+
+
+    #endregion 
+
     protected override void SetUpVisuals()
     {
         

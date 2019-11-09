@@ -5,7 +5,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
-{
+{   /*
+        All Methods in here do not affect gamelogic in anyway.
+        Only UI elements are being managed.         
+     */
     public static UIManager current;
     public Text TurnText;
     [SerializeField]
@@ -39,15 +42,15 @@ public class UIManager : MonoBehaviour
     public event Action onHideWaterIndicatorTrigger;
     public event Action onShowWaterIndicatorTrigger;
     public event Action onAttackerTurnTrigger;
-    public event Action onDefenderTurnTrigger;
+    public event Action onDefenderTurnTrigger;    
+    public event Action onCheckIfThereIsWaterTrigger;
     public void HideWaterIndicatorTrigger()
     {
         if(onHideWaterIndicatorTrigger!=null)
         {
             onHideWaterIndicatorTrigger();
         }
-    }
-    
+    }    
     public void ShowWaterIndicatorTrigger()
     {
         if(onShowWaterIndicatorTrigger!=null)
@@ -67,6 +70,16 @@ public class UIManager : MonoBehaviour
         if(onAttackerTurnTrigger!=null)
         {
             onAttackerTurnTrigger();
+        }
+    }
+
+    
+    //Assumes 
+    public void CheckIfThereIsWaterTrigger()
+    {
+        if(onCheckIfThereIsWaterTrigger!=null)
+        {
+            onCheckIfThereIsWaterTrigger();
         }
     }
     //----------------

@@ -61,5 +61,17 @@ public class ModuleVisual : MonoBehaviour
         }
     }
 
+
+    // Refactor this out into defender Module Visual Child script
+    // at some point
+    public void SetCheckPlacement(bool shouldPlace)
+    {
+        Debug.Log("Placed check on " + parentModule  + ". Click button confirm");
+        foreach(Animator a in animatorList)
+        {
+            a.SetBool("checkhasbeenPlaced",shouldPlace);
+        }
+    }
+
     
 }
