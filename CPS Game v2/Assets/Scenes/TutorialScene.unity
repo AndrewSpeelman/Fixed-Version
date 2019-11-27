@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -136,7 +136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &99058773
 RectTransform:
   m_ObjectHideFlags: 0
@@ -168,6 +168,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e56efb2cdf551664baf5cc2fb0057fcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Name: 
+  m_Name: 
+  m_Name: 
+  m_Name: 
 --- !u!114 &99058775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,13 +232,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a44866a8b1fccee4fa1fbc7ccfb903cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
   popupPrefab: {fileID: 1771340278282874, guid: 20825e5a22a5815499c875070af46bdd,
     type: 3}
   AttackedIndicator: {fileID: 1322095868030548, guid: 569b7672bd0bcac45b82f9ed902d9677,
     type: 3}
   PreviousModule: {fileID: 264402965}
-  InFlowingPump: {fileID: 1849263467}
+  NextModule: []
+  InFlowingPump: {fileID: 0}
   Attacked: 0
+  canbeAttacked: 1
+  AttackerVisual: {fileID: 0}
+  DefenderVisual: {fileID: 0}
+  WaterIndicator: {fileID: 0}
+  visualOffset: {x: 0, y: 1.3, z: 0}
   tank: {fileID: 264402965}
 --- !u!1 &170076733
 GameObject:
@@ -369,7 +380,7 @@ PrefabInstance:
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 1849263467}
+      objectReference: {fileID: 0}
     - target: {fileID: 114127325393874920, guid: 9c98cec72dcc6484b9854215ff2db438,
         type: 3}
       propertyPath: AttackedIndicator
@@ -831,7 +842,7 @@ PrefabInstance:
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 1032295293}
+      objectReference: {fileID: 0}
     - target: {fileID: 114635232617175116, guid: ecb9ed18472e91e4a9841f3279372fb3,
         type: 3}
       propertyPath: AttackedIndicator
@@ -960,7 +971,7 @@ PrefabInstance:
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 1032295293}
+      objectReference: {fileID: 0}
     - target: {fileID: 114698971064820580, guid: 2c0771878fa98c542813384f180890d5,
         type: 3}
       propertyPath: AttackedIndicator
@@ -1031,6 +1042,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Reservoir: {fileID: 818242695}
+  firstModule: {fileID: 0}
+  endModule: {fileID: 0}
+  ModuleList: []
+  initialModuleList: []
+  listhasbeenCompiled: 0
+  listenercounttest: 0
 --- !u!4 &689642307
 Transform:
   m_ObjectHideFlags: 0
@@ -1071,7 +1088,7 @@ PrefabInstance:
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 1032295293}
+      objectReference: {fileID: 0}
     - target: {fileID: 114635232617175116, guid: ecb9ed18472e91e4a9841f3279372fb3,
         type: 3}
       propertyPath: AttackedIndicator
@@ -1180,7 +1197,7 @@ PrefabInstance:
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 1849263467}
+      objectReference: {fileID: 0}
     - target: {fileID: 114291324350689874, guid: 764b2fb4f37fd534bb78d2cc22e522bd,
         type: 3}
       propertyPath: Tank
@@ -1226,7 +1243,7 @@ PrefabInstance:
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 1032295293}
+      objectReference: {fileID: 0}
     - target: {fileID: 114635232617175116, guid: ecb9ed18472e91e4a9841f3279372fb3,
         type: 3}
       propertyPath: AttackedIndicator
@@ -1392,6 +1409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b52198275b4dd4a881da732309a19c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelText: {fileID: 0}
 --- !u!114 &952970046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1580,18 +1598,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WaterFlowController: {fileID: 689642306}
   SceneLoader: {fileID: 1663656656}
-  OraclePrefab: {fileID: 1151573525474462, guid: 2f3523011a04e6f40aa95f958c2abf53,
-    type: 3}
-  OracleSpawnPoint: {x: -3, y: 3.5, z: 0}
+  UIManager: {fileID: 0}
   AttackerUI: {fileID: 1402154358}
   Reservoir: {fileID: 818242695}
   TurnCounter: {fileID: 99058775}
-  ReservoirCounter: {fileID: 1053468218}
-  ScreenCover: {fileID: 952970046}
   GameUI: {fileID: 1868224648}
   GameBoard: {fileID: 945473463}
   TurnText: {fileID: 1311477495}
-  NumberOfAttacksPerTurn: 1
+  attackResource: 1
   NumberOfOracles: 2
   ReservoirLimit: 10
   TurnLimit: 15
@@ -1646,7 +1660,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -40}
+  m_AnchoredPosition: {x: -800, y: -660}
   m_SizeDelta: {x: 1019, y: 191.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1025122847
@@ -1682,7 +1696,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Attacks Remaining
+  m_Text: 'Attacks Remaining:'
 --- !u!222 &1025122848
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1691,18 +1705,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1025122845}
   m_CullTransparentMesh: 0
---- !u!114 &1032295293 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114441962571396894, guid: 9c98cec72dcc6484b9854215ff2db438,
-    type: 3}
-  m_PrefabInstance: {fileID: 1655649999}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 608c7bdfd549cc648a671380e587ca9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1053468215
 GameObject:
   m_ObjectHideFlags: 0
@@ -1721,7 +1723,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1053468216
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1738,7 +1740,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -869, y: 473.01}
+  m_AnchoredPosition: {x: -4200, y: 60}
   m_SizeDelta: {x: 250, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1053468217
@@ -1753,6 +1755,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e56efb2cdf551664baf5cc2fb0057fcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Name: 
+  m_Name: 
+  m_Name: 
+  m_Name: 
 --- !u!114 &1053468218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1766,7 +1772,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.046724804, g: 0.11810246, b: 0.3962264, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1845,7 +1851,7 @@ PrefabInstance:
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 1849263467}
+      objectReference: {fileID: 0}
     - target: {fileID: 4099675452661254, guid: ecb9ed18472e91e4a9841f3279372fb3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.5219727
@@ -1923,7 +1929,7 @@ PrefabInstance:
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 1032295293}
+      objectReference: {fileID: 0}
     - target: {fileID: 114635232617175116, guid: ecb9ed18472e91e4a9841f3279372fb3,
         type: 3}
       propertyPath: AttackedIndicator
@@ -2024,7 +2030,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1311477493
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2056,6 +2062,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e56efb2cdf551664baf5cc2fb0057fcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Name: 
+  m_Name: 
+  m_Name: 
 --- !u!114 &1311477495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2134,7 +2143,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1376493225
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2166,6 +2175,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e56efb2cdf551664baf5cc2fb0057fcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Name: 
+  m_Name: 
+  m_Name: 
+  m_Name: 
 --- !u!114 &1376493227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2259,6 +2272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b52198275b4dd4a881da732309a19c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelText: {fileID: 0}
 --- !u!114 &1402154361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2266,7 +2280,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1402154358}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -2458,7 +2472,7 @@ PrefabInstance:
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 1032295293}
+      objectReference: {fileID: 0}
     - target: {fileID: 114441962571396894, guid: 9c98cec72dcc6484b9854215ff2db438,
         type: 3}
       propertyPath: popupPrefab
@@ -2583,7 +2597,7 @@ PrefabInstance:
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 1032295293}
+      objectReference: {fileID: 0}
     - target: {fileID: 114698971064820580, guid: 2c0771878fa98c542813384f180890d5,
         type: 3}
       propertyPath: AttackedIndicator
@@ -2622,12 +2636,12 @@ PrefabInstance:
         type: 3}
       propertyPath: PreviousModule
       value: 
-      objectReference: {fileID: 1849263467}
+      objectReference: {fileID: 0}
     - target: {fileID: 114635232617175116, guid: ecb9ed18472e91e4a9841f3279372fb3,
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 1849263467}
+      objectReference: {fileID: 0}
     - target: {fileID: 114635232617175116, guid: ecb9ed18472e91e4a9841f3279372fb3,
         type: 3}
       propertyPath: AttackedIndicator
@@ -2706,18 +2720,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 715248612}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1849263467 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114127325393874920, guid: 9c98cec72dcc6484b9854215ff2db438,
-    type: 3}
-  m_PrefabInstance: {fileID: 174817620}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 608c7bdfd549cc648a671380e587ca9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1868224648
 GameObject:
   m_ObjectHideFlags: 0
@@ -2774,6 +2776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b52198275b4dd4a881da732309a19c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelText: {fileID: 0}
 --- !u!114 &1868224651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2827,7 +2830,7 @@ PrefabInstance:
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 1032295293}
+      objectReference: {fileID: 0}
     - target: {fileID: 114299726853037410, guid: 6fb95b00634533e4aabdc54207e8830e,
         type: 3}
       propertyPath: InPump
@@ -2837,7 +2840,7 @@ PrefabInstance:
         type: 3}
       propertyPath: OutPump
       value: 
-      objectReference: {fileID: 1849263467}
+      objectReference: {fileID: 0}
     - target: {fileID: 114299726853037410, guid: 6fb95b00634533e4aabdc54207e8830e,
         type: 3}
       propertyPath: TankCapacity
@@ -2956,7 +2959,7 @@ PrefabInstance:
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 1032295293}
+      objectReference: {fileID: 0}
     - target: {fileID: 114698971064820580, guid: 2c0771878fa98c542813384f180890d5,
         type: 3}
       propertyPath: AttackedIndicator
@@ -3069,12 +3072,12 @@ PrefabInstance:
         type: 3}
       propertyPath: PreviousModule
       value: 
-      objectReference: {fileID: 1032295293}
+      objectReference: {fileID: 0}
     - target: {fileID: 114635232617175116, guid: ecb9ed18472e91e4a9841f3279372fb3,
         type: 3}
       propertyPath: InFlowingPump
       value: 
-      objectReference: {fileID: 1032295293}
+      objectReference: {fileID: 0}
     - target: {fileID: 114635232617175116, guid: ecb9ed18472e91e4a9841f3279372fb3,
         type: 3}
       propertyPath: AttackedIndicator
