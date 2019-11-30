@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class ModuleVisual : MonoBehaviour
 {
-      [SerializeField]
+    //------------IMPORTANT!----------
+    //---- In the future let the string variables be static instead of setting it in code---
+    //------------IMPORTANT!----------
+
+    [SerializeField]
     private Module parentModule;
 
     [SerializeField]
     private List<Animator> animatorList = new List<Animator>();
     //--note-- parentmodule doesn't get assigned and is null when a method is called. execution 
     //order is weird
-    public int test = 0;
+    
     void Update()
     {
     }
@@ -21,12 +25,61 @@ public class ModuleVisual : MonoBehaviour
     }
     void Start()
     {        
+        
+        UIManager.current.onConfirmCheckPlacementTrigger += ConfirmTrigger;
+
         parentModule = GetComponentInParent<Module>();
         
         animatorList.AddRange(GetComponentsInChildren<Animator>());        
         animatorList.AddRange(GetComponents<Animator>());
         
     }
+
+    
+    private void OnDestroy()
+    {
+        UIManager.current.onConfirmCheckPlacementTrigger -= ConfirmTrigger;
+    }
+
+    
+    
+    //Confirm that this module is being watched
+    //assumes that all 
+    private void ConfirmTrigger()
+    {
+        if(GameController.current.NumAvailableCheckPlacements<0)
+        {
+            Debug.LogError("Placements have been exceeded");
+            
+        }
+        foreach(Animator a in animatorList)
+        {
+            foreach(AnimatorControllerParameter b in a.parameters)
+            {
+                if(b.name=="confirm")
+                {
+                    a.SetTrigger("confirm");
+                    GameLogic.current.WatchThisNode(parentModule);
+                    continue;
+                }
+            }
+        }
+
+    }
+
+    /*
+    private void Reset()
+    {
+        
+        foreach(Animator a in animatorList)
+        {
+           //reset here
+        }
+        //maybe do it for every turn change or where it is forced upon the user or the user themselves
+
+    }*/
+
+    #region BroadcastMessages
     protected void AttackedTrigger()
     {
         Debug.Log("STATUS: "+ parentModule.Attacked);
@@ -34,9 +87,18 @@ public class ModuleVisual : MonoBehaviour
         {
             a.SetBool("Attacked",parentModule.Attacked);
         }
-
     }
-
+    //set the ui conditions to set the water to show true/false
+    protected void SetWater(bool isActive)
+    {
+        Debug.Log("HELLO: "+isActive);
+        foreach(Animator a in animatorList)
+        {
+            a.SetBool("hasWater",isActive);
+        }
+        
+    }
+    //
     protected void SwitchingTurn(string id)
     {
         //weird script execution problem. fix more later
@@ -61,7 +123,7 @@ public class ModuleVisual : MonoBehaviour
         }
     }
 
-
+    #endregion
     // Refactor this out into defender Module Visual Child script
     // at some point
     public void SetCheckPlacement(bool shouldPlace)

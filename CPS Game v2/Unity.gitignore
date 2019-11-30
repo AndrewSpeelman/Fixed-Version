@@ -2,13 +2,14 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
-/[Ll]ibrary/
-/[Tt]emp/
-/[Oo]bj/
-/[Bb]uild/
-/[Bb]uilds/
-/[Ll]ogs/
-/[Mm]emoryCaptures/
+CPS Game v2/[Ll]ibrary/
+CPS Game v2/[Tt]emp/
+CPS Game v2/[Oo]bj/
+CPS Game v2/[Bb]uild/
+CPS Game v2/[Bb]uilds/
+CPS Game v2/[Ll]ogs/
+CPS Game v2/[Mm]emoryCaptures/
+CPS Game v2/[Tt}emp/
 
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
