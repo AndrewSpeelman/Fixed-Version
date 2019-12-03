@@ -36,7 +36,7 @@ public class GameController : MonoBehaviour
     public int Turn = 0;
 
     public int ReservoirLimit = 10;
-    public int TurnLimit = 4;
+    public int TurnLimit = 2;
 
     public Text TurnTimer;
     private DateTime ActiveTurnTimer;
@@ -48,7 +48,7 @@ public class GameController : MonoBehaviour
 
     public GameState GameState = GameState.AttackerTurn;
 
- 
+	public string gameWinner= "Attacker";
 
     //setups
     protected void Awake()
@@ -128,7 +128,13 @@ public class GameController : MonoBehaviour
     private void EndGame()
     {        
         Turn=0;
-        Debug.Log("Game Has Ended");        
+		
+		if( WaterFlowController.systemIsBroken() == false)
+			gameWinner= "Defender";
+		
+        Debug.Log(gameWinner +" has won.");   
+
+		SceneLoader.LoadNextScene();
     }
 
     public void NextTurn()

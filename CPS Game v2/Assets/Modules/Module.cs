@@ -23,6 +23,7 @@ public abstract class Module : MonoBehaviour
     public Pump InFlowingPump;
 
     public bool Attacked = false;
+    public bool isFixed = false;
 
     public WaterObject Water;
 
@@ -257,6 +258,21 @@ public abstract class Module : MonoBehaviour
 
 
     }
+	
+	/// <summary>
+    /// What to do when the defender fixes the module
+    /// </summary>
+    public virtual void Fix()
+    {
+        this.Attacked = false;
+		
+		//resimulate water
+        WaterFlowController.current.SimulateWater();
+
+		//Applies to only gameobjects below this. Intended for the scripts
+        // attached to the visual particles
+        gameObject.BroadcastMessage("AttackedTrigger",SendMessageOptions.DontRequireReceiver);
+    }
 
 
     /// <summary>
@@ -264,7 +280,8 @@ public abstract class Module : MonoBehaviour
     /// </summary>
     protected virtual void DefenderAction()
     {
-        //Default is nothing
+        Debug.Log("FIXED: " + gameObject.name);
+        this.Fix();
     }
 
     /// <summary>

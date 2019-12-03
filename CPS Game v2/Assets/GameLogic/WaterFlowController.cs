@@ -26,7 +26,7 @@ public class WaterFlowController : MonoBehaviour
     private void Start()
     {
     }
-
+	
     /// <summary>
     /// Makes time move (tick) forward for the modules.  Ticking time forward allows for the water to flow through
     /// the system.
@@ -123,4 +123,20 @@ public class WaterFlowController : MonoBehaviour
 
 
     }
+	
+	//Returns true if every "attacked" element is fixed
+	public bool systemIsBroken()
+	{
+		
+		bool isBroken= false;
+        foreach(Module m in initialModuleList)
+		{
+			if( m.HasFlow == false)
+			{
+				isBroken= true;
+			}
+		}
+		
+		return isBroken;
+	}
 }
