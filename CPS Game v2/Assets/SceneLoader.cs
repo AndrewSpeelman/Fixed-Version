@@ -10,6 +10,12 @@ public class SceneLoader : MonoBehaviour {
         int current_scene_index = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(current_scene_index + 1);
     }
+	
+	public void SkipScene()
+    {
+        int current_scene_index = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(current_scene_index + 2);
+    }
 
     public void LoadStartScene()
     {

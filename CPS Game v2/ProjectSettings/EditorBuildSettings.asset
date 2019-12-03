@@ -9,9 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/TitleScene.unity
     guid: 682227a375cced84a8deaea220dfd7ae
   - enabled: 1
-    path: Assets/Scenes/GameScene2.unity
-    guid: 516f6e30de04b454a84dc4434722a7a3
+    path: Assets/Scenes/LEVEL1.unity
+    guid: 27b2a3ee7972ed24e8b7770592aae4df
   - enabled: 1
-    path: Assets/Scenes/VictoryScene.unity
+    path: Assets/Scenes/DefVicLev1.unity
+    guid: 2d9bcaf1ce8402c4aab43e406c8f2e46
+  - enabled: 1
+    path: Assets/Scenes/AttVicLev1.unity
     guid: 5cf3fef9cada96b419946b3433ac3c62
+  - enabled: 1
+    path: Assets/Scenes/LEVEL2.unity
+    guid: 2b4d98978c742c64097321da8400d0a2
   m_configObjects: {}

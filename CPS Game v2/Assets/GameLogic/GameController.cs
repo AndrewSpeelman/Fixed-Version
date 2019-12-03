@@ -123,6 +123,10 @@ public class GameController : MonoBehaviour
     public void LoadNextScene()
     {
         //ADD LOADING TO NEXT SCENE HERE
+		if (gameWinner == "Defender")
+			SceneLoader.LoadNextScene();
+		else
+			SceneLoader.SkipScene();
     }
 
     private void EndGame()
@@ -131,10 +135,11 @@ public class GameController : MonoBehaviour
 		
 		if( WaterFlowController.systemIsBroken() == false)
 			gameWinner= "Defender";
+		else
+			gameWinner= "Attacker";
 		
         Debug.Log(gameWinner +" has won.");   
 
-		SceneLoader.LoadNextScene();
     }
 
     public void NextTurn()
