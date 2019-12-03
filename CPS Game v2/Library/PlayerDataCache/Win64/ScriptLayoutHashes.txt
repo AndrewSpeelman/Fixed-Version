@@ -10,6 +10,9 @@ Assets/Scenes/AttVicLev1.unity
 Assets/Scenes/LEVEL2.unity
 Assets/Scenes/DefVicLev2.unity
 Assets/Scenes/AttVicLev2.unity
+Assets/Scenes/LEVEL3.unity
+Assets/Scenes/DefVicLev3.unity
+Assets/Scenes/AttVicLev3.unity
 SceneListEnd?
 a1f19ad47d3094e235f21b74dfc423a8 Unity.Postprocessing.Runtime.dll:UnityEngine.Rendering.PostProcessing.PostProcessLayer
 ded4be6d59e0f6fb27fec89fefaf1f35 Assembly-CSharp.dll:.Pipe
