@@ -15,8 +15,6 @@ public class GameController : MonoBehaviour
     public SceneLoader SceneLoader;
     public UIManager UIManager;
 
-    //public GameObject OraclePrefab;
-    //public GameObject OracleSpawnPoint;
 
     public GameObject AttackerUI;
 
@@ -31,8 +29,9 @@ public class GameController : MonoBehaviour
     public Text TurnText;
 
     public int attackResource = 1;
-    public int NumberOfOracles = 1;
     public int NumAvailableAttacks { get; set; }
+
+    public int NumAvailableCheckPlacements = 0;
 
     private int Turn = 0;
 
@@ -49,32 +48,7 @@ public class GameController : MonoBehaviour
 
     public GameState GameState = GameState.AttackerTurn;
 
-    private List<Oracle> oracles;
-
-
-    // private void CheckEndTurn()
-    // {
-    //     int SecondsRemaining = (TurnDuration - (ActiveTurnTimer - StartTurnTimer).Seconds);
-    //     TurnTimer.text = "Time Remaining: " + SecondsRemaining.ToString();
-
-    //     if (SecondsRemaining > 5)
-    //     {
-    //         TurnTimer.color = new Color(.79f, .82f, .16f);
-    //     }
-    //     else if (SecondsRemaining % 2 == 0)
-    //     {
-    //         TurnTimer.color = new Color(1f, .3f, .15f);
-    //     }
-    //     else
-    //     {
-    //         TurnTimer.color = new Color(1f, .2f, 0);
-    //     }
-
-    //     if (ActiveTurnTimer > StartTurnTimer.AddSeconds(TurnDuration))
-    //     {
-    //         EndTurn();
-    //     }
-    // }
+ 
 
     //setups
     protected void Awake()
@@ -87,6 +61,11 @@ public class GameController : MonoBehaviour
         }
         else
          Destroy(gameObject);
+
+         if(NumAvailableCheckPlacements<0)
+         {
+             Debug.LogError("Placements must be greater than 0");
+         }
     }
 
     //I think it doesn't have a turn timer

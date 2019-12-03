@@ -50,16 +50,28 @@ public class Reservoir : Module
     {        
         if(DefenderVisual != null)
         {
-            if(!checkPlaced)
-            {
-                DefenderVisual_child.SetCheckPlacement(true);     
-                checkPlaced= !checkPlaced;           
+            //check if you enough watchers to place
+            if(GameController.current.NumAvailableCheckPlacements>0)
+            {                
+                //check if check can be placed
+                if(!checkPlaced)
+                {
+                    GameLogic.current.DecreaseWatchPlacement();
+                    DefenderVisual_child.SetCheckPlacement(true);     
+                    checkPlaced= !checkPlaced;           
+                }
+                else if(checkPlaced)
+                {
+                    
+                    GameLogic.current.IncreaseWatchPlacement();
+                    DefenderVisual_child.SetCheckPlacement(false);        
+                    checkPlaced= !checkPlaced;            
+                }
             }
-            else if(checkPlaced)
+            else
             {
-                
-                DefenderVisual_child.SetCheckPlacement(false);        
-                checkPlaced= !checkPlaced;            
+                Debug.Log("NOPLACEMENTS");
+
             }
         }
     }

@@ -36,8 +36,8 @@ public abstract class Module : MonoBehaviour
     public GameObject DefenderVisual;
 
     protected Dropdown[] AttackDropdowns;
-
-    public bool HasFlow
+    // this just means it has water in it
+    public bool HasFlow 
     {
         get
         {
@@ -89,6 +89,8 @@ public abstract class Module : MonoBehaviour
 
     }
 
+    
+
     //add setup variables here
     protected virtual void SetUpVariables()
     {
@@ -129,12 +131,12 @@ public abstract class Module : MonoBehaviour
     protected virtual void onAttackerTurn()
     {
     
-        gameObject.BroadcastMessage("SwitchingTurn", AttackerVisual.name);
+        gameObject.BroadcastMessage("SwitchingTurn", AttackerVisual.name,SendMessageOptions.DontRequireReceiver);
     }
     protected virtual void onDefenderTurn()
     {
 
-        gameObject.BroadcastMessage("SwitchingTurn", DefenderVisual.name);
+        gameObject.BroadcastMessage("SwitchingTurn", DefenderVisual.name,SendMessageOptions.DontRequireReceiver);
     }
 
     
@@ -197,6 +199,20 @@ public abstract class Module : MonoBehaviour
     }
     #endregion
     
+    #region WaterActivation/Disable
+    public virtual void WaterDisable()
+    {        
+        Water = null;       
+        WaterIndicator.SetActive(false);
+        gameObject.BroadcastMessage("SetWater",false, SendMessageOptions.DontRequireReceiver);
+    }
+    public virtual void WaterActivate()
+    {
+        
+        WaterIndicator.SetActive(true);
+        gameObject.BroadcastMessage("SetWater",true,SendMessageOptions.DontRequireReceiver);
+    }
+    #endregion
     /// <summary>
     /// Recursive. Water flows. Stops if current systems is blocked (override this depending on type)
     /// </summary>   
@@ -237,7 +253,7 @@ public abstract class Module : MonoBehaviour
 
         //Applies to only gameobjects below this. Intended for the scripts
         // attached to the visual particles
-        gameObject.BroadcastMessage("AttackedTrigger");
+        gameObject.BroadcastMessage("AttackedTrigger",SendMessageOptions.DontRequireReceiver);
 
 
     }
@@ -267,21 +283,19 @@ public abstract class Module : MonoBehaviour
     {
         if (GameController.current.GameState == GameState.AttackerTurn)
         {
-            if (canbeAttacked && Input.GetMouseButtonDown(0) )
+            if (canbeAttacked && Input.GetMouseButtonDown(0))
             {
                 AttackerAction();
             }
 
         }
         else if(GameController.current.GameState == GameState.DefenderTurn)
-        {
-            
+        {            
             if (Input.GetMouseButtonDown(0))
             {
                 Debug.Log("Click!");
                 DefenderAction();
             }
-
         }
     }
     #endregion  

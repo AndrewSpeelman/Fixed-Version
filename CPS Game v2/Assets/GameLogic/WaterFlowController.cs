@@ -25,15 +25,6 @@ public class WaterFlowController : MonoBehaviour
     private int index=0;
     private void Start()
     {
-        /* 
-        Module currMod = Reservoir;
-        while (currMod.PreviousModule)
-        {
-            currMod = currMod.PreviousModule;
-        }
-        this.firstModule = currMod;
-       
-        this.firstModule.Water = new WaterObject(); */
     }
 
     /// <summary>
@@ -103,14 +94,13 @@ public class WaterFlowController : MonoBehaviour
     {
         foreach(Module m in initialModuleList)
         {
-            m.Water = null;       
-            m.WaterIndicator.SetActive(false);
+            m.WaterDisable();
         }
         foreach(Module m in ModuleList)
         {            
-            m.Water = new WaterObject(); 
+            m.Water = new WaterObject(); //unsure what this is needed but keeping it for now
             if(GameController.current.GameState == GameState.AttackerTurn)            
-                m.WaterIndicator.SetActive(true);
+                m.WaterActivate();
         }
         //update indicators
         //Debug.LogError("STOP");
@@ -123,7 +113,6 @@ public class WaterFlowController : MonoBehaviour
     {
         //asumes no diverging paths for now
         //clearwater
-        Module currMod = firstModule;
         CompileModuleList();
         if(listhasbeenCompiled ==false)
         {
