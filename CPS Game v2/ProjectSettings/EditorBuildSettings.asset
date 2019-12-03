@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/TitleScene.unity
     guid: 682227a375cced84a8deaea220dfd7ae
   - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: 576002ec01317624584de9eefd1c0325
+  - enabled: 1
     path: Assets/Scenes/LEVEL1.unity
     guid: 27b2a3ee7972ed24e8b7770592aae4df
   - enabled: 1
@@ -20,4 +23,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LEVEL2.unity
     guid: 2b4d98978c742c64097321da8400d0a2
+  - enabled: 1
+    path: Assets/Scenes/DefVicLev2.unity
+    guid: ba47c7c75b40f9a49ba0bffa355afa6d
+  - enabled: 1
+    path: Assets/Scenes/AttVicLev2.unity
+    guid: 63f207f673a080b469d78d673b6145fe
   m_configObjects: {}
