@@ -78,6 +78,7 @@
      <Compile Include="Assets\SceneLoader.cs" />
      <Compile Include="Assets\Scripts\AttackVisual.cs" />
      <Compile Include="Assets\Scripts\GameplayController.cs" />
+     <Compile Include="Assets\Scripts\UI\TurnCounter.cs" />
      <Compile Include="Assets\Scripts\UI\UIManager.cs" />
      <Compile Include="Assets\Scripts\UI\WatchCounter.cs" />
      <Compile Include="Assets\StartButton.cs" />

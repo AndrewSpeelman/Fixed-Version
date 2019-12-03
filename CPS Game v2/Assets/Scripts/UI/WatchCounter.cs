@@ -9,7 +9,8 @@ public class WatchCounter : MonoBehaviour
     void Start()
     {                
         UIManager.current.onUpdateWatcherCountTrigger += UpdateCounter;     
-        counter =  gameObject.GetComponent(typeof(Text)) as Text;
+        counter =  gameObject.GetComponent(typeof(Text)) as Text;        
+        counter.text = GameController.current.NumAvailableCheckPlacements.ToString();
     }
 
     

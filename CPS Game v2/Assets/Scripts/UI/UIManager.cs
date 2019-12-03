@@ -46,6 +46,8 @@ public class UIManager : MonoBehaviour
     public event Action onCheckIfThereIsWaterTrigger;
     public event Action onConfirmCheckPlacementTrigger;    
     public event Action onUpdateWatcherCountTrigger;
+    public event Action onUpdateTurnCountTrigger;
+    
     public void HideWaterIndicatorTrigger()
     {
         if(onHideWaterIndicatorTrigger!=null)
@@ -81,6 +83,14 @@ public class UIManager : MonoBehaviour
         if(onUpdateWatcherCountTrigger!=null)
         {
             onUpdateWatcherCountTrigger();
+        }
+    }    
+
+    public void UpdateTurnCountTrigger()
+    {
+        if(onUpdateTurnCountTrigger!=null)
+        {
+            onUpdateTurnCountTrigger();
         }
     }    
     //Assumes 

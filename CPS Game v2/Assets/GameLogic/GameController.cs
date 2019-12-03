@@ -33,10 +33,10 @@ public class GameController : MonoBehaviour
 
     public int NumAvailableCheckPlacements = 0;
 
-    private int Turn = 0;
+    public int Turn = 0;
 
     public int ReservoirLimit = 10;
-    public int TurnLimit = 15;
+    public int TurnLimit = 4;
 
     public Text TurnTimer;
     private DateTime ActiveTurnTimer;
@@ -74,7 +74,6 @@ public class GameController : MonoBehaviour
         Debug.Log("START TURN:");
         
         StartCoroutine(TurnLoop());
-        Debug.Log("Game has finished");
         StartTurnTimer = DateTime.Now;
         ActiveTurn = true;
     }
@@ -92,6 +91,9 @@ public class GameController : MonoBehaviour
 
         while(gamestart)
         {
+            Turn++;            
+            UIManager.current.UpdateWatcherCountTrigger();
+            Debug.Log("TURN NUMBER: "+Turn);
             Debug.Log(GameState + " is starting");
             StartTurn();            
             Debug.Log(GameState + " setup is complete");
@@ -105,9 +107,28 @@ public class GameController : MonoBehaviour
             }
             EndTurn();
             Debug.Log(GameState + " has ended.");
+
+            if(Turn>=TurnLimit)
+            {                
+                gamestart=false;
+                EndGame();
+            }
             yield return null;
         }
 
+        LoadNextScene();
+
+    }
+
+    public void LoadNextScene()
+    {
+        //ADD LOADING TO NEXT SCENE HERE
+    }
+
+    private void EndGame()
+    {        
+        Turn=0;
+        Debug.Log("Game Has Ended");        
     }
 
     public void NextTurn()
