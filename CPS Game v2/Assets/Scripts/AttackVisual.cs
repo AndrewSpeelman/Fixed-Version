@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class AttackVisual : MonoBehaviour
 {
+    
+    ///Indiana Note: Actually does nothing/is inaccessible ???
+    ///Other comments were left by previous students
+    
     //this is attached to visualattackindicator. Assumes only children are
     //visual aid like particles that might use animators
 

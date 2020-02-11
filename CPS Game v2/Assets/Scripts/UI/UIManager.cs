@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     public  GameObject DefendVisual_Resovoir;
     
+    //The team names. Could update with player names?
     [SerializeField]
     private string AttackerName = "Attacker";
     [SerializeField]
@@ -38,7 +39,7 @@ public class UIManager : MonoBehaviour
     }
 
     //check https://youtu.be/gx0Lt4tCDE0
-    
+    //Various game events, just catches and calls a function on event trigger (see video above)
     public event Action onHideWaterIndicatorTrigger;
     public event Action onShowWaterIndicatorTrigger;
     public event Action onAttackerTurnTrigger;
@@ -114,6 +115,8 @@ public class UIManager : MonoBehaviour
         }
 
     }
+
+    //Updates the name display. Names updated to are above in this file.
     public void UpdateTurnText(GameState currentState)
     {
         if(currentState == GameState.DefenderTurn)

@@ -17,7 +17,7 @@ public class GameplayController : MonoBehaviour
     [SerializeField]
     public  GameObject Defender_Generic;
 
-    
+    //Actually does nothing/is inaccessible ???
     void Awake()
     {
         if(current == null)
