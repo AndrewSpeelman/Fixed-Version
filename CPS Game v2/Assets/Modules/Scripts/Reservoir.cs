@@ -47,36 +47,59 @@ public class Reservoir : Module
         //Update visual that this module has added to look out for
      */
     protected override void DefenderAction()
-    {        
-        if(DefenderVisual != null)
+    {
+        //make sure there are visuals and that it is not already confirmed as a watcher location.
+        if (DefenderVisual != null && checkPlacedConfirmed == false)
         {
             //check if you enough watchers to place
-            if(GameController.current.NumAvailableCheckPlacements>0)
-            {                
-                //check if check can be placed
-                if(!checkPlaced)
-                {
-                    GameLogic.current.DecreaseWatchPlacement();
-                    DefenderVisual_child.SetCheckPlacement(true);     
-                    checkPlaced= !checkPlaced;           
-                }
-                else if(checkPlaced)
-                {
-                    
-                    GameLogic.current.IncreaseWatchPlacement();
-                    DefenderVisual_child.SetCheckPlacement(false);        
-                    checkPlaced= !checkPlaced;            
-                }
-            }
-            else
+            if (GameController.current.NumAvailableCheckPlacements <= 0 && checkPlaced == false)
             {
-                Debug.Log("NOPLACEMENTS");
+                return;
+            }
 
+            //check if check can be placed
+            if (!checkPlaced)
+            {
+                GameLogic.current.DecreaseWatchPlacement();
+                DefenderVisual_child.SetCheckPlacement(true);
+                checkPlaced = !checkPlaced;
+            }
+            else if (checkPlaced)
+            {
+
+                GameLogic.current.IncreaseWatchPlacement();
+                DefenderVisual_child.SetCheckPlacement(false);
+                checkPlaced = !checkPlaced;
             }
         }
     }
 
-    
+    public void ConfirmPlaced()
+    {
+        //used to keep track of which reservoirs are confirmed
+        if (checkPlaced)
+        {
+            checkPlaced = false;
+            checkPlacedConfirmed = true;
+        }
+    }
+
+    //Used to reset watchers at the end of the turn.
+    public void ResetPlaced()
+    {
+        if(checkPlacedConfirmed)
+        {
+            //mark as unconfirmed
+            checkPlacedConfirmed = false;
+
+            //disable visuals
+            DefenderVisual_child.SetCheckPlacement(false);
+            DefenderVisual_child.RemoveIndicator();
+
+
+        }
+    }
+
     #region HandleIndicators
     private void onShowWaterIndicator()
     {
@@ -90,8 +113,8 @@ public class Reservoir : Module
     protected override void SetUpVisuals()
     {
         
-         DefenderVisual= UIManager.current.DefendVisual_Resovoir;
-         AttackerVisual= UIManager.current.AttackVisual_Resovoir;
+         DefenderVisual= UIManager.current.DefendVisual_Reservoir;
+         AttackerVisual= UIManager.current.AttackVisual_Reservoir;
     }
     #endregion
 }

@@ -56,7 +56,6 @@ public class WaterFlowController : MonoBehaviour
         {
             if(next.Attacked == false) //attacked modules do not let water through.
             {   
-                Debug.Log("HELLO");      
                 
                 if(!listhasbeenCompiled)
                 {                    
@@ -99,8 +98,7 @@ public class WaterFlowController : MonoBehaviour
         foreach(Module m in ModuleList)
         {            
             m.Water = new WaterObject(); //unsure what this is needed but keeping it for now
-            if(GameController.current.GameState == GameState.AttackerTurn)            
-                m.WaterActivate();
+            m.WaterActivate();
         }
         //update indicators
         //Debug.LogError("STOP");

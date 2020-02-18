@@ -37,6 +37,20 @@ public class GameLogic : MonoBehaviour
         //UI
         UIManager.current.ConfirmWaterTrigger();
         //Non UI Logic
+
+        //Activate all pipe fixes when confirm is selected.
+        for (int i = 0; i < GameController.current.GameBoard.GetComponentsInChildren<Pipe>().Length; i++)
+        {
+            //Fix only fixes pipes if they are selected for fixing. 
+            GameController.current.GameBoard.GetComponentsInChildren<Pipe>()[i].Fix();
+        }
+
+        //Confirms placement of watchers.
+        for (int i = 0; i < GameController.current.GameBoard.GetComponentsInChildren<Reservoir>().Length; i++)
+        {
+            //Reset the placement of watchers. 
+            GameController.current.GameBoard.GetComponentsInChildren<Reservoir>()[i].ConfirmPlaced();
+        }
     }   
 
     public void WatchThisNode(Module m)
@@ -45,6 +59,7 @@ public class GameLogic : MonoBehaviour
 
     }
 
+    //decreases the number of available watchers and updates UI
     public void DecreaseWatchPlacement()
     {
         GameController.current.NumAvailableCheckPlacements--;
@@ -52,7 +67,8 @@ public class GameLogic : MonoBehaviour
 
 
     }
-    
+
+    //increases the number of available watchers and updates UI
     public void IncreaseWatchPlacement()
     {
         GameController.current.NumAvailableCheckPlacements++;
@@ -61,5 +77,25 @@ public class GameLogic : MonoBehaviour
         
         //check if it goes overboard to catch a bug
         
+    }
+
+    //decreases the number of available attacks and updates UI
+    public void DecreaseAttackCount()
+    {
+        GameController.current.AttacksAvailable--;
+        UIManager.current.UpdateAttackCountTrigger();
+
+
+    }
+
+    //increses the number of available attacks and updates UI
+    public void IncreaseAttackCount()
+    {
+        GameController.current.AttacksAvailable++;
+        UIManager.current.UpdateAttackCountTrigger();
+
+
+        //check if it goes overboard to catch a bug
+
     }
 }

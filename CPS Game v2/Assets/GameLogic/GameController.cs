@@ -29,9 +29,9 @@ public class GameController : MonoBehaviour
     public Text TurnText;
 
     public int attackResource = 1;
-    public int NumAvailableAttacks { get; set; }
 
     public int NumAvailableCheckPlacements = 0;
+    public int AttacksAvailable = 0;
 
     public int Turn = 0;
 
@@ -93,6 +93,7 @@ public class GameController : MonoBehaviour
         {
             Turn++;            
             UIManager.current.UpdateWatcherCountTrigger();
+            UIManager.current.UpdateAttackCountTrigger();
             Debug.Log("TURN NUMBER: "+Turn);
             Debug.Log(GameState + " is starting");
             StartTurn();            
@@ -138,7 +139,6 @@ public class GameController : MonoBehaviour
 		else
 			gameWinner= "Attacker";
 		
-        Debug.Log(gameWinner +" has won.");   
 
     }
 
@@ -148,7 +148,9 @@ public class GameController : MonoBehaviour
     }
     public void StartTurn()
     {
-        if(this.GameState == GameState.AttackerTurn)
+        UIManager.current.ToggleAttackerUI();
+        UIManager.current.ToggleDefenderUI();
+        if (this.GameState == GameState.AttackerTurn)
         {
             UIManager.current.ShowWaterIndicatorTrigger();
             UIManager.current.AttackerTurnTrigger();
@@ -156,8 +158,15 @@ public class GameController : MonoBehaviour
         }
         else //defender turn
         {
+            //Confirms placement of watchers.
+            for (int i = 0; i < GameBoard.GetComponentsInChildren<Reservoir>().Length; i++)
+            {
+                //Reset the placement of watchers. 
+                GameBoard.GetComponentsInChildren<Reservoir>()[i].ResetPlaced();
+            }
             UIManager.current.HideWaterIndicatorTrigger();
             UIManager.current.DefenderTurnTrigger();
+            
         }
         ActiveTurn=true;   
     }

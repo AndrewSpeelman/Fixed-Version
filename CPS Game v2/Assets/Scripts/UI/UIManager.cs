@@ -16,10 +16,16 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     public  GameObject DefendVisual_Generic;
     [SerializeField]
-    public  GameObject AttackVisual_Resovoir;
+    public  GameObject AttackVisual_Reservoir;
     [SerializeField]
-    public  GameObject DefendVisual_Resovoir;
-    
+    public  GameObject DefendVisual_Reservoir;
+    [SerializeField]
+    public GameObject DefendVisual_Pipe;
+    [SerializeField]
+    public GameObject AttackerUI;
+    [SerializeField]
+    public GameObject DefenderUI;
+
     //The team names. Could update with player names?
     [SerializeField]
     private string AttackerName = "Attacker";
@@ -47,6 +53,7 @@ public class UIManager : MonoBehaviour
     public event Action onCheckIfThereIsWaterTrigger;
     public event Action onConfirmCheckPlacementTrigger;    
     public event Action onUpdateWatcherCountTrigger;
+    public event Action onUpdateAttackCountTrigger;
     public event Action onUpdateTurnCountTrigger;
     
     public void HideWaterIndicatorTrigger()
@@ -85,7 +92,15 @@ public class UIManager : MonoBehaviour
         {
             onUpdateWatcherCountTrigger();
         }
-    }    
+    }
+
+    public void UpdateAttackCountTrigger()
+    {
+        if (onUpdateAttackCountTrigger != null)
+        {
+            onUpdateAttackCountTrigger();
+        }
+    }
 
     public void UpdateTurnCountTrigger()
     {
@@ -140,7 +155,16 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    
+    //Shows or hides the defender ui elements
+    public void ToggleDefenderUI()
+    {
+        DefenderUI.SetActive(!DefenderUI.activeSelf);
+    }
 
+    //shows or hides the attacker ui elements
+    public void ToggleAttackerUI()
+    {
+        AttackerUI.SetActive(!AttackerUI.activeSelf);
+    }
 
 }

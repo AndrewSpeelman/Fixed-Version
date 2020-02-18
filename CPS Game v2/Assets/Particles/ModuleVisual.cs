@@ -82,18 +82,28 @@ public class ModuleVisual : MonoBehaviour
     #region BroadcastMessages
     protected void AttackedTrigger()
     {
-        Debug.Log("STATUS: "+ parentModule.Attacked);
-        foreach(Animator a in animatorList)
+        Debug.Log("attacked");
+        foreach (Animator a in animatorList)
         {
             a.SetBool("Attacked",parentModule.Attacked);
+        }
+    }
+
+    //Changes the particle for defender fixing pipes
+    protected void FixedTrigger()
+    {
+        Debug.Log("fixed");
+        foreach (Animator a in animatorList)
+        {
+           a.SetBool("FixSelected", parentModule.FixSelected);
         }
     }
     //set the ui conditions to set the water to show true/false
     protected void SetWater(bool isActive)
     {
-        Debug.Log("HELLO: "+isActive);
         foreach(Animator a in animatorList)
         {
+
             a.SetBool("hasWater",isActive);
         }
         
@@ -123,6 +133,8 @@ public class ModuleVisual : MonoBehaviour
         }
     }
 
+   
+
     #endregion
     // Refactor this out into defender Module Visual Child script
     // at some point
@@ -132,8 +144,25 @@ public class ModuleVisual : MonoBehaviour
         foreach(Animator a in animatorList)
         {
             a.SetBool("checkhasbeenPlaced",shouldPlace);
+            a.SetBool("Reset", false);
+            a.SetBool("Remove", false);
         }
     }
 
-    
+    public void RemoveIndicator()
+    {
+        foreach (Animator a in animatorList)
+        {
+            a.SetTrigger("Remove");
+        }
+
+        foreach (Animator a in animatorList)
+        {
+            a.SetTrigger("Reset");
+        }
+        Debug.Log("resetting watchers");
+    }
+
+
+
 }

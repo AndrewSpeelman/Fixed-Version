@@ -17,13 +17,13 @@ public abstract class Module : MonoBehaviour
     public GameObject popupPrefab;
     public GameObject AttackedIndicator;
 
-    public Module PreviousModule; //must be added in
+    public List<Module> PreviousModule = new List<Module>(); //must be added in
     public List<Module> NextModule = new List<Module>(); //must be added in
 
     public Pump InFlowingPump;
 
     public bool Attacked = false;
-    public bool isFixed = false;
+    public bool FixSelected = false;
 
     public WaterObject Water;
 
@@ -209,8 +209,8 @@ public abstract class Module : MonoBehaviour
     }
     public virtual void WaterActivate()
     {
-        
-        WaterIndicator.SetActive(true);
+        if (GameController.current.GameState == GameState.AttackerTurn)
+            WaterIndicator.SetActive(true);
         gameObject.BroadcastMessage("SetWater",true,SendMessageOptions.DontRequireReceiver);
     }
     #endregion
@@ -220,20 +220,26 @@ public abstract class Module : MonoBehaviour
     public virtual void WaterFlow()
     {
         //only flows if water is available from previous and not blocked
-
         bool blocked = false; //make this public later
-        if (PreviousModule.Water != null && !blocked)
-        {
-            //take water from previous then moved to new modules
-            this.Water = PreviousModule.Water;
-            if (NextModule != null)
-            {
-                foreach (Module next in NextModule)
-                {
-                    next.WaterFlow();
-                }
-            }
 
+        for (int i = 0; i < PreviousModule.Count; i++) //loop through all the previous modules
+        {
+            if (PreviousModule[i].Water != null && !blocked)
+            {
+                //take water from previous then moved to new modules
+                this.Water = PreviousModule[i].Water;
+
+                if (NextModule != null)
+                {
+                    foreach (Module next in NextModule)
+                    {
+                        next.WaterFlow();
+                    }
+                }
+
+                break;
+
+            }
         }
     }
 
@@ -245,18 +251,34 @@ public abstract class Module : MonoBehaviour
     /// </summary>
     public virtual void Attack()
     {
+        //Skip attack if there aren't enough attacks remaining
+        if (GameController.current.AttacksAvailable <= 0 && this.Attacked == false)
+        {
+            Debug.Log("NO Attacks remaining.");
+            return;
+        }
+        else if (this.Attacked == true)
+        {
+            //if removing an attack increase remaining attack count
+            GameLogic.current.IncreaseAttackCount();
+        }
+        else
+        {
+            //if adding an attack decrease remaining attack count
+            GameLogic.current.DecreaseAttackCount();
+        }
+
+        //Toggle the attack visuals and perform attack
         this.Attacked = !this.Attacked;
         //tally up number of attacks
-        
+
         //resimulate water
         WaterFlowController.current.SimulateWater();
 
 
         //Applies to only gameobjects below this. Intended for the scripts
         // attached to the visual particles
-        gameObject.BroadcastMessage("AttackedTrigger",SendMessageOptions.DontRequireReceiver);
-
-
+        gameObject.BroadcastMessage("AttackedTrigger", SendMessageOptions.DontRequireReceiver);
     }
 	
 	/// <summary>
@@ -264,14 +286,6 @@ public abstract class Module : MonoBehaviour
     /// </summary>
     public virtual void Fix()
     {
-        this.Attacked = false;
-		
-		//resimulate water
-        WaterFlowController.current.SimulateWater();
-
-		//Applies to only gameobjects below this. Intended for the scripts
-        // attached to the visual particles
-        gameObject.BroadcastMessage("AttackedTrigger",SendMessageOptions.DontRequireReceiver);
     }
 
 
@@ -280,8 +294,6 @@ public abstract class Module : MonoBehaviour
     /// </summary>
     protected virtual void DefenderAction()
     {
-        Debug.Log("FIXED: " + gameObject.name);
-        this.Fix();
     }
 
     /// <summary>
@@ -289,8 +301,10 @@ public abstract class Module : MonoBehaviour
     /// </summary>
     public virtual void AttackerAction()
     {
-        Debug.Log("ATTACKED: " + gameObject.name);
-        this.Attack();
+        if (this.canbeAttacked)
+        {
+            this.Attack();
+        }
     }
 
     /// <summary>
@@ -298,21 +312,18 @@ public abstract class Module : MonoBehaviour
     /// </summary>
     public virtual void OnMouseOver()
     {
+        
+    }
+
+    public virtual void OnMouseUpAsButton()
+    {
         if (GameController.current.GameState == GameState.AttackerTurn)
         {
-            if (canbeAttacked && Input.GetMouseButtonDown(0))
-            {
-                AttackerAction();
-            }
-
+            AttackerAction();
         }
-        else if(GameController.current.GameState == GameState.DefenderTurn)
-        {            
-            if (Input.GetMouseButtonDown(0))
-            {
-                Debug.Log("Click!");
-                DefenderAction();
-            }
+        else if (GameController.current.GameState == GameState.DefenderTurn)
+        {
+            DefenderAction();
         }
     }
     #endregion  
