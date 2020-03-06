@@ -42,7 +42,7 @@ public class WaterFlowController : MonoBehaviour
         else
          Destroy(gameObject);
     }
-    public void CompileModuleList()
+    public void CompileModuleList()  //this function determines where and if water is flowing. should find module class
     {
         //only flows if water is available from previous and not blocked
         ModuleList.Clear();
@@ -88,7 +88,7 @@ public class WaterFlowController : MonoBehaviour
         }
     }
 
-    //update later to be more efficient, bruteforce for now
+    //update later to be more efficient, bruteforce for now //jeez this is jank
      public void UpdateWater()
     {
         foreach(Module m in initialModuleList)
@@ -124,13 +124,13 @@ public class WaterFlowController : MonoBehaviour
 	
 	//Returns true if every "attacked" element is fixed
 	public bool systemIsBroken()
-	{
-		
-		bool isBroken= false;
+    {//we should change this so that as long as a path exists from start to end defender wins?
+
+        bool isBroken= false;
         foreach(Module m in initialModuleList)
 		{
 			if( m.HasFlow == false)
-			{
+			{ //if any element does not have flow defender loses
 				isBroken= true;
 			}
 		}

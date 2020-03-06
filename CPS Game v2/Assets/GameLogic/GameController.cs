@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour
     public WaterFlowController WaterFlowController;
     public SceneLoader SceneLoader;
     public UIManager UIManager;
-
+    //calling all the other controller files in gamelogic directory
 
     public GameObject AttackerUI;
 
@@ -33,28 +33,28 @@ public class GameController : MonoBehaviour
     public int NumAvailableCheckPlacements = 0;
     public int AttacksAvailable = 0;
 
-    public int Turn = 0;
+    public int Turn = 0; //turn timer starts at 0
 
     public int ReservoirLimit = 10;
-    public int TurnLimit = 2;
+    public int TurnLimit = 2; //only 3 turns total (0,1,2) 
 
     public Text TurnTimer;
     private DateTime ActiveTurnTimer;
     private DateTime StartTurnTimer;
-    public int TurnDuration = 15; // Seconds
+    public int TurnDuration = 15; // Seconds/dont think this is actually used
     private bool ActiveTurn;
 
     private bool turnisActive = false;
 
     public GameState GameState = GameState.AttackerTurn;
 
-	public string gameWinner= "Attacker";
+	public string gameWinner= "Attacker";//is default gamewinner attacker..?
 
     //setups
     protected void Awake()
-    {
+    {//i think this just starts the game? not sure.
 
-        if(current == null)
+        if (current == null)
         {
             current=this;
 
@@ -92,7 +92,7 @@ public class GameController : MonoBehaviour
         while(gamestart)
         {
             Turn++;            
-            UIManager.current.UpdateWatcherCountTrigger();
+            UIManager.current.UpdateWatcherCountTrigger(); //fills the number of watchers the defender has..? shouldnt this be on defender turn only?
             UIManager.current.UpdateAttackCountTrigger();
             Debug.Log("TURN NUMBER: "+Turn);
             Debug.Log(GameState + " is starting");
@@ -110,8 +110,8 @@ public class GameController : MonoBehaviour
             Debug.Log(GameState + " has ended.");
 
             if(Turn>=TurnLimit)
-            {                
-                gamestart=false;
+            {                 //ends round when turn limit is up
+                gamestart =false;
                 EndGame();
             }
             yield return null;
@@ -122,17 +122,18 @@ public class GameController : MonoBehaviour
     }
 
     public void LoadNextScene()
-    {
-        //ADD LOADING TO NEXT SCENE HERE
-		if (gameWinner == "Defender")
+    { //look into sceneloader
+      //ADD LOADING TO NEXT SCENE HERE
+        if (gameWinner == "Defender")
 			SceneLoader.LoadNextScene();
 		else
 			SceneLoader.SkipScene();
     }
 
     private void EndGame()
-    {        
-        Turn=0;
+    {         //heres the code for the end of game screen. shouldnt be hard to create a function that goes back to the main menu i think.
+        //should be able to just call sceneloader.startscreen or something when a button is pressed.
+        Turn = 0;
 		
 		if( WaterFlowController.systemIsBroken() == false)
 			gameWinner= "Defender";
@@ -150,9 +151,9 @@ public class GameController : MonoBehaviour
     {
         UIManager.current.ToggleAttackerUI();
         UIManager.current.ToggleDefenderUI();
-        if (this.GameState == GameState.AttackerTurn)
+        if (this.GameState == GameState.AttackerTurn)  //its the attacker turn do this.
         {
-            UIManager.current.ShowWaterIndicatorTrigger();
+            UIManager.current.ShowWaterIndicatorTrigger(); //calling ui manager
             UIManager.current.AttackerTurnTrigger();
 
         }
