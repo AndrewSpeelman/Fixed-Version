@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44756246, g: 0.4975288, b: 0.57533693, a: 1}
+  m_IndirectSpecularColor: {r: 0.4475618, g: 0.49752808, b: 0.5753362, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1713,6 +1713,7 @@ Transform:
   - {fileID: 1663656657}
   - {fileID: 827203695}
   - {fileID: 1600709934}
+  - {fileID: 2064868619}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2917,6 +2918,7 @@ MonoBehaviour:
   WaterFlowController: {fileID: 689642306}
   SceneLoader: {fileID: 1663656656}
   UIManager: {fileID: 1600709935}
+  AttackerAI: {fileID: 2064868620}
   AttackerUI: {fileID: 1402154358}
   Reservoir: {fileID: 502425198}
   TurnCounter: {fileID: 99058775}
@@ -4460,6 +4462,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2054638017}
   m_CullTransparentMesh: 0
+--- !u!1 &2064868618
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2064868619}
+  - component: {fileID: 2064868620}
+  m_Layer: 0
+  m_Name: AttackerAI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2064868619
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064868618}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 611916646}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2064868620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064868618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5ad84415b5ee794290b0c28a2036a66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WaterFlowController: {fileID: 0}
+  priority: 02000000040000000600000008000000
 --- !u!1 &2146765461
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour
     public WaterFlowController WaterFlowController;
     public SceneLoader SceneLoader;
     public UIManager UIManager;
+    public AttackerAI AttackerAI;
     //calling all the other controller files in gamelogic directory
 
     public GameObject AttackerUI;
@@ -153,8 +154,10 @@ public class GameController : MonoBehaviour
         UIManager.current.ToggleDefenderUI();
         if (this.GameState == GameState.AttackerTurn)  //its the attacker turn do this.
         {
-            UIManager.current.ShowWaterIndicatorTrigger(); //calling ui manager
-            UIManager.current.AttackerTurnTrigger();
+     //       UIManager.current.ShowWaterIndicatorTrigger(); //calling ui manager
+    //        UIManager.current.AttackerTurnTrigger();
+          AttackerAI.Attack();
+          
 
         }
         else //defender turn
