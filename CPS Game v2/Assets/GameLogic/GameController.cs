@@ -102,8 +102,10 @@ public class GameController : MonoBehaviour
             //update ui to new turn
             UIManager.SetUpTurn(GameState);
             //Debug.LogError("STOPHERE");
+            CallAI();
             while(ActiveTurn) //loop until turn is done.
             {
+                
                 yield return null; //code will resume after next update
                 //Debug.LogError("LOOPING");
             }
@@ -149,14 +151,14 @@ public class GameController : MonoBehaviour
         ActiveTurn = false;
     }
     public void StartTurn()
-    {
+    { //this is all setup, dont put the attacker ai attack function call here.
         UIManager.current.ToggleAttackerUI();
         UIManager.current.ToggleDefenderUI();
         if (this.GameState == GameState.AttackerTurn)  //its the attacker turn do this.
         {
      //       UIManager.current.ShowWaterIndicatorTrigger(); //calling ui manager
     //        UIManager.current.AttackerTurnTrigger();
-          AttackerAI.Attack();
+     
           
 
         }
@@ -175,6 +177,15 @@ public class GameController : MonoBehaviour
         ActiveTurn=true;   
     }
 
+    public void CallAI()
+    {
+      if (this.GameState == GameState.AttackerTurn)  
+      {
+             AttackerAI.Attack();
+             NextTurn();
+      }
+    }
+    
     public void EndTurn()
     {
         if(GameState == GameState.AttackerTurn)
