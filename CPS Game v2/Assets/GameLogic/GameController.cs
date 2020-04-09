@@ -37,7 +37,7 @@ public class GameController : MonoBehaviour
     public int Turn = 0; //turn timer starts at 0
 
     public int ReservoirLimit = 10;
-    public int TurnLimit = 2; //only 3 turns total (0,1,2) 
+    public int TurnLimit; //value is set in unity
 
     public Text TurnTimer;
     private DateTime ActiveTurnTimer;
@@ -110,6 +110,7 @@ public class GameController : MonoBehaviour
                 //Debug.LogError("LOOPING");
             }
             EndTurn();
+            Debug.Log("turn number = "+ Turn + " of" +TurnLimit);
             Debug.Log(GameState + " has ended.");
 
             if(Turn>=TurnLimit)

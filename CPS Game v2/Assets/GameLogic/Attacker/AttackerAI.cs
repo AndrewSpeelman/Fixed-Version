@@ -10,32 +10,43 @@ public class AttackerAI : MonoBehaviour
     {
          
     }
+
     public GameController GameController;
     public WaterFlowController WaterFlowController;
-    //add priority list
-    public List<int> priority = new List<int>(); //will probably want to make a function
-      //to randomize/autoate piority list but hardcode for now
+    //add Priority list
+    public List<int> Priority = new List<int>(); 
     int attackcount = 0; //testing counter to make sure its not attacking more than 2 total times
     public void Attack()
     { 
-      //finds the module at the position according to the priority list.
-      if (attackcount < 2)
+    int i = 0;
+      while(Priority.Count >= 1) 
       {
-      for (int i=0; i<2; i++) //currently hardcoded to 1 attack will readd more later
-      {
-        if (WaterFlowController.initialModuleList[priority[i]].Attacked == false)
+        if (WaterFlowController.initialModuleList[Priority[i]].Attacked == false
+            && WaterFlowController.initialModuleList[Priority[i]] is Pipe)
         {
-          WaterFlowController.initialModuleList[priority[i]].Attack();
-          Debug.Log("attacked at " + WaterFlowController.initialModuleList[priority[i]]);
+          WaterFlowController.initialModuleList[Priority[i]].Attack();
+          Debug.Log("attacked at " + WaterFlowController.initialModuleList[Priority[i]]);
           attackcount++;
           break;
         }
-        //if attack tagets same target, loop to next in priority queue
-         //break if attacked enough times?
-        
+        else
+        {
+          FronttoBack(Priority);
+        }
+            //if attack tagets same target, loop to next in Priority queue
+             //break if attacked enough times?
+        i++;
       }
-      }
+
     }
+
+   public void FronttoBack (List<int> Priority)
+   { // moves the front of hte priority list to the back -- only makes so much variation.
+     int tmp = Priority[0];
+     Priority.RemoveAt(0);
+     Priority.Add(tmp);
+   }
+   
     
 
     // Update is called once per frame

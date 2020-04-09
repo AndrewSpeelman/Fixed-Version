@@ -2930,7 +2930,7 @@ MonoBehaviour:
   AttacksAvailable: 4
   Turn: 0
   ReservoirLimit: 10
-  TurnLimit: 4
+  TurnLimit: 8
   TurnTimer: {fileID: 1376493227}
   TurnDuration: 15
   GameState: 0
@@ -4507,7 +4507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameController: {fileID: 995454137}
   WaterFlowController: {fileID: 689642306}
-  priority: 03000000040000000500000007000000
+  Priority: 03000000050000000d000000010000000e000000090000000d0000000700000010000000
 --- !u!1 &2146765461
 GameObject:
   m_ObjectHideFlags: 0
