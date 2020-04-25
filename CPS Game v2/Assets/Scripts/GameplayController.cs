@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameplayController : MonoBehaviour
 {
-    
+
     /// <summary>
     //  All Gameplay related logic and prefabds are handled here related mechanics are done here. 
     //  Currently
@@ -12,7 +12,9 @@ public class GameplayController : MonoBehaviour
     //  GameController should be handling macro logic,
     /// </summary>
 
-    
+    private static int level = 0;
+    public const int NUM_LEVELS = 3;
+
     public static GameplayController current;
     [SerializeField]
     public  GameObject Defender_Generic;
@@ -29,4 +31,15 @@ public class GameplayController : MonoBehaviour
          Destroy(gameObject);    
     }
 
+    public static int Level
+    {
+        get
+        {
+            return level;
+        }
+        set
+        {
+            level = value;
+        }
+    }
 }

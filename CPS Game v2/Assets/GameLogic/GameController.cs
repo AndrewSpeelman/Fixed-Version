@@ -129,9 +129,9 @@ public class GameController : MonoBehaviour
     { //look into sceneloader
       //ADD LOADING TO NEXT SCENE HERE
         if (gameWinner == "Defender")
-			SceneLoader.LoadNextScene();
+			SceneLoader.LoadDefenderVictory();
 		else
-			SceneLoader.SkipScene();
+			SceneLoader.LoadAttackerVictory();
     }
 
     private void EndGame()

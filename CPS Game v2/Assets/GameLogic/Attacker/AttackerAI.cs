@@ -27,6 +27,7 @@ public class AttackerAI : MonoBehaviour
           WaterFlowController.initialModuleList[Priority[i]].Attack();
           Debug.Log("attacked at " + WaterFlowController.initialModuleList[Priority[i]]);
           attackcount++;
+          i++;
           break;
         }
         else
@@ -35,7 +36,7 @@ public class AttackerAI : MonoBehaviour
         }
             //if attack tagets same target, loop to next in Priority queue
              //break if attacked enough times?
-        i++;
+        
       }
 
     }
