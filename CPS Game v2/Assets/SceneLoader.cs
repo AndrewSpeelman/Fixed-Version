@@ -14,15 +14,22 @@ public class SceneLoader : MonoBehaviour {
         else
         {
             GameplayController.Level = GameplayController.Level + 1;
-            //Four is the offset between the title screen and level 1
-            SceneManager.LoadScene(GameplayController.Level + 4);
+            //Five is the offset between the title screen and level 1
+            SceneManager.LoadScene(GameplayController.Level + 5);
         }
     }
 
     public void LoadCurrentLevel()
     {
-        //Four is the offset between the title screen and level 1
-        SceneManager.LoadScene(GameplayController.Level + 4);
+        //Five is the offset between the title screen and level 1
+        SceneManager.LoadScene(GameplayController.Level + 5);
+    }
+
+    public void LoadLevel(int lvl)
+    {
+        GameplayController.Level = lvl;
+        //Five is the offset between the title screen and level 1
+        SceneManager.LoadScene(GameplayController.Level + 5);
     }
 
     public void LoadAttackerVictory()
@@ -44,5 +51,10 @@ public class SceneLoader : MonoBehaviour {
     {
         GameplayController.Level = 0;
         SceneManager.LoadScene(0);
+    }
+
+    public void LoadLevelSelect()
+    {
+        SceneManager.LoadScene(5);
     }
 }
