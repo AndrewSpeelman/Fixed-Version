@@ -12,30 +12,42 @@ EditorBuildSettings:
     path: Assets/Scenes/Tutorial.unity
     guid: 576002ec01317624584de9eefd1c0325
   - enabled: 1
+    path: Assets/Scenes/DefVic.unity
+    guid: 1e303c0911c971e4aa72991b3c2efa43
+  - enabled: 1
+    path: Assets/Scenes/AttVic.unity
+    guid: e3506e384a1299d41907b90e3da7515e
+  - enabled: 1
     path: Assets/Scenes/LEVEL1.unity
     guid: 27b2a3ee7972ed24e8b7770592aae4df
-  - enabled: 1
-    path: Assets/Scenes/DefVicLev1.unity
-    guid: 2d9bcaf1ce8402c4aab43e406c8f2e46
-  - enabled: 1
-    path: Assets/Scenes/AttVicLev1.unity
-    guid: 5cf3fef9cada96b419946b3433ac3c62
   - enabled: 1
     path: Assets/Scenes/LEVEL2.unity
     guid: 2b4d98978c742c64097321da8400d0a2
   - enabled: 1
-    path: Assets/Scenes/DefVicLev2.unity
-    guid: ba47c7c75b40f9a49ba0bffa355afa6d
-  - enabled: 1
-    path: Assets/Scenes/AttVicLev2.unity
-    guid: 63f207f673a080b469d78d673b6145fe
-  - enabled: 1
     path: Assets/Scenes/LEVEL3.unity
     guid: c7e93d36fb334c442ac1c9bd5db7b717
   - enabled: 1
+    path: Assets/Scenes/EndScreen.unity
+    guid: 1a595b584e04a164288df462755e9f7c
+  - enabled: 0
+    path: Assets/Scenes/DefVicLev1.unity
+    guid: 2d9bcaf1ce8402c4aab43e406c8f2e46
+  - enabled: 0
+    path: Assets/Scenes/AttVicLev1.unity
+    guid: 5cf3fef9cada96b419946b3433ac3c62
+  - enabled: 0
+    path: Assets/Scenes/DefVicLev2.unity
+    guid: ba47c7c75b40f9a49ba0bffa355afa6d
+  - enabled: 0
+    path: Assets/Scenes/AttVicLev2.unity
+    guid: 63f207f673a080b469d78d673b6145fe
+  - enabled: 0
     path: Assets/Scenes/DefVicLev3.unity
     guid: 11bfc8447daa19041b5e9427fc062fa9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/AttVicLev3.unity
     guid: 3ad461a1cc6e64a4b8040a6528bd964c
+  - enabled: 1
+    path: Assets/Scenes/Level Select.unity
+    guid: 70c11595bcd3980429df6b60cb855a94
   m_configObjects: {}
