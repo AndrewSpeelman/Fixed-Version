@@ -11,9 +11,7 @@ public class GameplayController : MonoBehaviour
     //  GameController has some of the logic so transfer over later
     //  GameController should be handling macro logic,
     /// </summary>
-
     private static int level = 0;
-    public const int NUM_LEVELS = 3;
 
     public static GameplayController current;
     [SerializeField]
@@ -30,7 +28,6 @@ public class GameplayController : MonoBehaviour
         else
          Destroy(gameObject);    
     }
-
     public static int Level
     {
         get
