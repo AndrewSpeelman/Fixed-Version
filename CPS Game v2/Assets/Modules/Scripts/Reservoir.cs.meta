@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: cd456767a088a154285d1392cf29691e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - popupPrefab: {instanceID: 0}
+  - AttackedIndicator: {instanceID: 0}
+  - PreviousModule: {instanceID: 0}
+  - InFlowingPump: {instanceID: 0}
+  - WaterIndicator: {fileID: 7247854893943363608, guid: 6f3b0decdc79626499f6904e31fdd2b6,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
